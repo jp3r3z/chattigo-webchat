@@ -3,7 +3,7 @@
 Webchat client for chattigo support service.
 
 ## Installation
-You can download Chattigo's webchat client from our CDN, like this:
+You can download Chattigo's webchat client from our CDN (not live yet), like this:
 
 ```html
 <!DOCTYPE html>
@@ -29,12 +29,15 @@ It is also available via npm, as a CommonJS package:
 
     $ npm install --save chattigo-webchat
 
-And then in your html or in a javascript file, just do:
+And then, in your html or in a javascript file, just do:
 
 ```js
 var chattigo = new Chattigo("<your_API_key>");
 chattigo.init();
 ```
+
+Alternatively, you can clone this project, and use webpack to generate the
+necessary files in the dist folder, and include them in your project.
 
 ## Usage
 
