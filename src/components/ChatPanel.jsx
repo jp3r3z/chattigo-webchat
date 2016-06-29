@@ -25,6 +25,10 @@ export default class MessageList extends Component {
 MessageList.contextTypes = { settings: React.PropTypes.object };
 
 export default class MessageForm extends Component {
+    sendHandler (e) {
+        e.preventDefault();
+        alert("El envío de mensajes no está habilitado todavía.");
+    }
     render() {
         return (
             <Form inline>
@@ -32,7 +36,10 @@ export default class MessageForm extends Component {
                     <FormGroup controlId="formControlsTextarea">
                         <FormControl componentClass="textarea" placeholder={Strings.PLACEHOLDER_MESSAGE} />
                     </FormGroup>
-                    <Button type="submit">
+                    <Button
+                        type="submit"
+                        onClick={this.sendHandler}
+                        >
                         <Glyphicon glyph={"send"} />
                     </Button>
                 </div>
