@@ -4,6 +4,11 @@
   "description": "Web chat client for Chattigo support service.",
   "main": "src/index.js",
   "scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.js",
+    "start:prod": "webpack-dev-server --config ./webpack.production.config.js",
+    "build": "webpack --config ./webpack.config.js --progress --colors",
+    "build:prod": "webpack --config ./webpack.production.config.js --progress --colors",
+    "clean": "find dist/ ! -name 'index.html' -type f -exec rm -f {} + && find dist/ ! -name 'dist' -type d -exec rm -rf {} +",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js 'test/**/*.@(js|jsx)'",
     "test:watch": "npm run test -- --watch"
   },

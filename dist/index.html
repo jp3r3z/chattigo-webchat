@@ -3,12 +3,18 @@
 
  <head>
    <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"></link>
-   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700"></link>
+   <script type="text/javascript" src="/chattigo-webchat.js"></script>
  </head>
 <body>
-  <div id="app"></div>
-  <script src="chattigo-webchat.js"></script>
+  <div id="app">
+      <h1>Your web site.</h1>
+      <div><p> whatever...</p></div> 
+  </div>
+  <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function() {
+          var chattigo = new Chattigo("<your_API_key>");
+          chattigo.init();
+      });
+  </script>
 </body>
 </html>
