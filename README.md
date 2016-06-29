@@ -1,4 +1,4 @@
-![Logo Chattigo](https://github.com/throoze/chattigo-webchat/blob/develop/src/assets/images/CHATTIGO.png)
+![Logo Chattigo](https://raw.githubusercontent.com/throoze/chattigo-webchat/develop/src/assets/images/CHATTIGO.png)
 # Chattigo's webchat-client
 Webchat client for chattigo support service.
 
