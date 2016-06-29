@@ -70,11 +70,15 @@ object, and its usage is as follows:
 ```js
 var settings = {
     header_text: "Web Chat",
-    message_placeholder: "Introduzca su mensaje...",
     send_text: "Enviar",
-    form_fields: ["Nombre", "RUT"],
+    login_text: "Iniciar sesión",
+    welcome_text: "Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión.",
+    message_placeholder: "Introduzca su mensaje...",
+    login_fields: ["Nombre", "Email", "RUT"],
     toggle_background_color: "#0853CB",
-    toggle_color: "#FFFFFF"
+    toggle_color: "#FFFFFF",
+    width: 300,
+    height: 400
 };
 
 var chattigo = new Chattigo("<your_API_key>", settings);
@@ -86,22 +90,29 @@ The default settings are defined as follows:
 ```js
 const SETTINGS = {
     header_text: "Web Chat",
-    message_placeholder: "Introduzca su mensaje...",
     send_text: "Enviar",
-    form_fields: ["Nombre", "RUT"],
+    login_text: "Iniciar sesión",
+    welcome_text: "Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión.",
+    message_placeholder: "Introduzca su mensaje...",
+    login_fields: ["Nombre", "Email", "RUT"],
     toggle_background_color: "#0853CB",
-    toggle_color: "#FFFFFF"
-}
+    toggle_color: "#FFFFFF",
+    width: 300,
+    height: 400
+};
 ```
 
-|          Setting          |                              Description                             |       Type      |         Default Value        |
-|---------------------------|----------------------------------------------------------------------|-----------------|------------------------------|
-| `header_text`             | Text displayed in the chat widget's upper bar                        | string          | `"Web Chat"`                 |
-| `message_placeholder`     | Placeholder for the send message box                                 | string          | `"Introduzca su mensaje..."` |
-| `send_text`               | Text displayed in the send button                                    | string          | `"Enviar"`                   |
-| `form_fields`             | List of fields required in order to start a chat session             | list of strings | `["Nombre", "RUT"]`          |
-| `toggle_background_color` | CSS `background-color` for the webchat button in the collapsed state | string          | `"#0853CB"`                  |
-| `toggle_color`            | CSS `color` property for the webchat button in the collapsed state   | string          | `"#FFFFFF"`                  |
+| Setting | Description | Type | Default Value |
+|:-------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------:|:--------------------------------------------------------------------------------------------------------------------------:|
+| `header_text` | Text displayed in the chat widget's upper bar | string | `"Web Chat"` |
+| `message_placeholder` | Placeholder for the send message box | string | `"Introduzca su mensaje..."` |
+| `send_text` | Text displayed in the send button | string | `"Enviar"` |
+| `form_fields` | List of fields required by Chattigo's customer in order to start a chat session. This data will be sent as a chat message, in JSON format, where every key corresponds to a [kebab-cased](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles) form of the field name. This will be improved in future releases. No client-side validation is provided. | list of strings | `["Nombre", "Email", "RUT"]` |
+| `toggle_background_color` | CSS `background-color` for the webchat button in the collapsed state | string | `"#0853CB"` |
+| `toggle_color` | CSS `color` property for the webchat button in the collapsed state | string | `"#FFFFFF"` |
+| `welcome_text` | Welcome message displayed in the login form | string | `"Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión."` |
+| `width` | Number of pixels of the expanded widget's with | int | `300` |
+| `height` | Number of pixels of the expanded widget's height | int | `400` |
 
 Expect more customization in next releases.
 

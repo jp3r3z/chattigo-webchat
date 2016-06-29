@@ -10,10 +10,10 @@ class ToggleButton extends Component {
     render() {
         return (
             <Button
-                id={"widget"}
                 className={Visibility.COLLAPSED.toLowerCase()}
                 onClick={() => this.props.onToggleClick()}
                 bsSize={"small"}
+                id={"widget"}
                 style={
                     {
                         color: this.context.settings.toggle_color,
@@ -31,7 +31,7 @@ ToggleButton.contextTypes = { settings: React.PropTypes.object };
 class WebChatWidget extends Component {
     render() {
         if (this.props.visibility == Visibility.COLLAPSED){
-            return (<ToggleButton onToggleClick={this.props.onToggleClick}/>);
+            return (<ToggleButton  onToggleClick={this.props.onToggleClick}/>);
         } else if (this.props.visibility == Visibility.EXPANDED){
             return (<WebChat/>);
         } else {

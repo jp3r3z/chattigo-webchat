@@ -1,45 +1,81 @@
+import classNames from 'classnames';
 import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Panel, Button, Glyphicon } from 'react-bootstrap';
 import { Visibility } from '../constants';
-import { toggle } from '../actions';
+import { toggle, logout } from '../actions';
 import Chat from './Chat';
 
 class Header extends Component {
-    renderButton() {
-        var icon = 'chevron-down';
+    renderButton(onClickFunc, classname, icon) {
         return (
             <Button
                 bsStyle="link"
-                onClick={this.props.toggle}>
-                <Glyphicon glyph={icon} /> {' '}
+                onClick={onClickFunc}
+                className={classname}
+                >
+                {' '}<Glyphicon glyph={icon} /> 
             </Button>
         );
     }
     render(){
-        return <div>{this.context.settings.header_text}{this.renderButton()}</div>;
+        let logout = null;
+        if (this.props.is_loggedin) {
+            logout = this.renderButton(
+                this.props.logout,
+                classNames('chattigo-top-bar-btn', 'chattigo-logout'),
+                'log-out');
+        }
+        return (
+            <div>
+                {this.context.settings.header_text}
+                {this.renderButton(
+                    this.props.toggle,
+                    classNames('chattigo-top-bar-btn', 'chattigo-toggle-collapse'),
+                    'chevron-down')}
+                {logout}
+            </div>
+        );
     }
 }
 Header.contextTypes = { settings: React.PropTypes.object };
+
+const mapStateToProps = (state) => {
+    return {
+        is_loggedin: state.session.is_loggedin
+    }
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
         toggle: () => {
             dispatch(toggle())
+        },
+        logout: () => {
+            dispatch(logout())
         }
     };
 };
 
-Header = connect((state) => ({}),mapDispatchToProps)(Header);
+Header = connect(mapStateToProps,mapDispatchToProps)(Header);
 
 export default class WebChat extends Component {
     render() {
         let header = <Header/>;
         return (
-            <Panel header={header} className={Visibility.EXPANDED.toLowerCase()}>
+            <Panel
+                header={header}
+                id={"widget"}
+                className={Visibility.EXPANDED.toLowerCase()}
+                style={{
+                    width: this.context.settings.width,
+                    height: this.context.settings.height
+                }}
+                >
                 <Chat/>
             </Panel>
         );
     }
 }
+WebChat.contextTypes = { settings: React.PropTypes.object };
