@@ -17,7 +17,7 @@ You can download Chattigo's webchat client from our CDN (not live yet), like thi
       <h1>Your web site.</h1>h1>
       <div><p> whatever...</p></div> 
   </div>
-  <script type="text/javascript" src="<CDN>/chattigo-webchat.js"></script>
+  <script type="text/javascript" src="http://driverwebchat1600.cloudapp.net/chattigo-webchat.js"></script>
   <script type="text/javascript">
         var chattigo = new Chattigo("<your_API_key>");
         chattigo.init();

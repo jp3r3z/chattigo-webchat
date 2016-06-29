@@ -50,6 +50,4 @@ class Chattigo {
 }
 export default Chattigo;
 
-// Bootstrap chattigo (for testing porpuses):
-let chattigo = new Chattigo("dummyAPIKey");
-chattigo.init();
+window.Chattigo = Chattigo;
