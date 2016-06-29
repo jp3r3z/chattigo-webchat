@@ -1,22 +1,31 @@
 import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button, Glyphicon } from 'react-bootstrap';
 import { Visibility } from '../constants';
 import { toggle } from '../actions';
+import WebChat from './WebChat'
 
 class ToggleButton extends Component {
     render() {
         return (
-            <div
+            <Button
                 id={"widget"}
                 className={Visibility.COLLAPSED.toLowerCase()}
                 onClick={() => this.props.onToggleClick()}
+                bsSize={"small"}
+                style={
+                    {
+                        color: this.context.settings.toggle_color,
+                        backgroundColor: this.context.settings.toggle_background_color
+                    }}
                 >
-                <span style={{top: 5, position: "relative"}}>{"+"}</span>
-            </div>
+                <Glyphicon glyph={"user"} bsSize={"small"}/>
+            </Button>
         );
     }
 }
+ToggleButton.contextTypes = { settings: React.PropTypes.object };
 
 
 class WebChatWidget extends Component {
@@ -24,7 +33,7 @@ class WebChatWidget extends Component {
         if (this.props.visibility == Visibility.COLLAPSED){
             return (<ToggleButton onToggleClick={this.props.onToggleClick}/>);
         } else if (this.props.visibility == Visibility.EXPANDED){
-            return (<div id={"widget"} className={Visibility.EXPANDED.toLowerCase()}>{"Aquí va el chat"}</div>);
+            return (<WebChat/>);
         } else {
             return null;
         }
@@ -45,5 +54,5 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-const WebChat = connect(mapStateToProps, mapDispatchToProps)(WebChatWidget);
-export default WebChat;
+const ChattigoWebChat = connect(mapStateToProps, mapDispatchToProps)(WebChatWidget);
+export default ChattigoWebChat;

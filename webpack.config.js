@@ -4,6 +4,7 @@ module.exports = {
   entry: [
     "webpack-dev-server/client?http://localhost:8080",
     "webpack/hot/only-dev-server",
+    "bootstrap-loader",
     "./src/index.jsx"
   ],
   module: {
@@ -18,10 +19,18 @@ module.exports = {
         'image-webpack'
       ]
     },{
+      test: /\.(woff2?)$/,
+      loader: 'url?limit=10000'
+    },{
+      test: /\.(ttf|eot)$/,
+      loader: 'file'
+    },{
       test   : /\.css$/,
       loaders: ["style", "css?sourceMap", "resolve-url"]
-    },
-    {
+    },{
+      test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+      loader: 'imports?jQuery=jquery'
+    },{
       test: /\.sass$/,
       loaders: ["style", "css?sourceMap", "resolve-url",  "sass?sourceMap"]
     }]

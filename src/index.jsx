@@ -2,13 +2,29 @@
  * Entry point for chattigo-webchat client
  */
 require('./assets/stylesheets/style.sass');
+import 'bootstrap-loader';
 import 'babel-polyfill';
 import React from 'react';
+import { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore';
-import WebChat from './components';
+import ChattigoWebChat from './components';
 import { SETTINGS } from './constants';
+
+class SettingsProvider extends Component {
+    getChildContext() {
+        return { settings: this.props.settings };
+    }
+
+    render() {
+        return this.props.children;
+    }
+}
+SettingsProvider.childContextTypes = {
+    settings: React.PropTypes.object
+};
+
 
 class Chattigo {
     constructor (APIkey, settings = SETTINGS) {
@@ -22,8 +38,10 @@ class Chattigo {
         document.getElementsByTagName('body')[0].appendChild(chattigo);
         render(
             (
-                <Provider store={this.store} settings={this.settings}>
-                    <WebChat/>
+                <Provider store={this.store}>
+                    <SettingsProvider settings={this.settings}>
+                        <ChattigoWebChat/>
+                    </SettingsProvider>
                 </Provider>
             ),
             document.getElementById(this.container)
