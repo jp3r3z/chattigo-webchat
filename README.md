@@ -82,5 +82,5 @@ contacto@chattigo.com.
 
 Chattigo's webchat client is distributed under GNU GENERAL PUBLIC LICENSE,
 Version 3. Check the
-[license](https://github.com/throoze/webchat-client/blob/develop/LICENSE)
+[license](https://github.com/throoze/chattigo-webchat/blob/develop/LICENSE)
 file for further details.
