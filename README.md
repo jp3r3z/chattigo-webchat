@@ -143,7 +143,7 @@ const SETTINGS = {
 | `width` | Number of pixels of the expanded widget's with | int | `300` |
 | `height` | Number of pixels of the expanded widget's height | int | `400` |
 
-Expect more customization in next releases.
+Expect more customization in future releases.
 
 
 ## API Key
