@@ -8,36 +8,63 @@ You can download Chattigo's webchat client from our CDN (not live yet), like thi
 ```html
 <!DOCTYPE html>
 <html>
-
  <head>
    <meta charset="utf-8">
+   <script type="text/javascript" src="http://driverwebchat1600.cloudapp.net/chattigo-webchat.js"></script>
  </head>
 <body>
   <div id="app">
-      <h1>Your web site.</h1>h1>
+      <h1>Your web site.</h1>
       <div><p> whatever...</p></div> 
   </div>
-  <script type="text/javascript" src="http://driverwebchat1600.cloudapp.net/chattigo-webchat.js"></script>
   <script type="text/javascript">
-        var chattigo = new Chattigo("<your_API_key>");
-        chattigo.init();
+      document.addEventListener("DOMContentLoaded", function() {
+          var chattigo = new Chattigo("<your_API_key>");
+          chattigo.init();
+      });
   </script>
 </body>
 </html>
 ```
 It is also available via npm, as a CommonJS package:
 
+
     $ npm install --save chattigo-webchat
 
-And then, in your html or in a javascript file, just do:
+
+In case you are using npm, you can also require/import chattigo as a CommonJS module:
 
 ```js
+// ES5
+var Chattigo = require('chattigo-webchat');
+``` 
+
+```js
+// ES6
+import Chattigo from 'chattigo-webchat';
+``` 
+
+And then, in your html or in a javascript file, just do:
+1
+
+```js
+// ES5
 var chattigo = new Chattigo("<your_API_key>");
 chattigo.init();
 ```
 
+
+```js
+// ES6
+const chattigo = new Chattigo("<your_API_key>");
+chattigo.init();
+```
+
+
 Alternatively, you can clone this project, and use webpack to generate the
 necessary files in the dist folder, and include them in your project.
+
+
 
 ## Usage
 
@@ -47,16 +74,18 @@ necessary files in the dist folder, and include them in your project.
 <html>
  <head>
    <meta charset="utf-8">
+   <script type="text/javascript" src="http://driverwebchat1600.cloudapp.net/chattigo-webchat.js"></script>
  </head>
 <body>
   <div id="app">
-      <h1>Your web site.</h1>h1>
+      <h1>Your web site.</h1>
       <div><p> whatever...</p></div> 
   </div>
-  <script type="text/javascript" src="<CDN>/chattigo-webchat.js"></script>
   <script type="text/javascript">
-        var chattigo = new Chattigo("<your_API_key>");
-        chattigo.init();
+      document.addEventListener("DOMContentLoaded", function() {
+          var chattigo = new Chattigo("<your_API_key>");
+          chattigo.init();
+      });
   </script>
 </body>
 </html>
