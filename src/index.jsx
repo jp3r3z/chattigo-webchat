@@ -1,8 +1,8 @@
 /* ./index.jsx
  * Entry point for chattigo-webchat client
  */
-require('./assets/stylesheets/style.sass');
 import 'bootstrap-loader';
+require('./assets/stylesheets/style.sass');
 import 'babel-polyfill';
 import React from 'react';
 import { Component } from 'react';
