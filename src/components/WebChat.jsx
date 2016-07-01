@@ -66,7 +66,7 @@ export default class WebChat extends Component {
         return (
             <Panel
                 header={header}
-                id={"widget"}
+                id={"chattigo-widget"}
                 className={Visibility.EXPANDED.toLowerCase()}
                 style={{
                     width: this.context.settings.width,

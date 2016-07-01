@@ -13,7 +13,7 @@ class ToggleButton extends Component {
                 className={Visibility.COLLAPSED.toLowerCase()}
                 onClick={() => this.props.onToggleClick()}
                 bsSize={"small"}
-                id={"widget"}
+                id={"chattigo-widget"}
                 style={
                     {
                         color: this.context.settings.toggle_color,
