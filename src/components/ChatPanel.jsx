@@ -10,21 +10,8 @@ import {
     } from 'react-bootstrap';
 import { Strings } from '../constants';
 
-export default class MessageList extends Component {
-    render(){
-        return (
-            <Panel
-                id={"chattigo-message-list"}
-                style={{
-                    height: this.context.settings.height * 0.63
-                }}
-                />
-            );
-    }
-}
-MessageList.contextTypes = { settings: React.PropTypes.object };
 
-export default class MessageForm extends Component {
+export class MessageForm extends Component {
     sendHandler (e) {
         e.preventDefault();
         alert("El envío de mensajes no está habilitado todavía.");
