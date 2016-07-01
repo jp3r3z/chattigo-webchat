@@ -4,6 +4,8 @@
   "description": "Web chat client for Chattigo support service.",
   "main": "src/index.js",
   "scripts": {
+    "refresh": "npm run clean && npm run build && npm run start",
+    "refresh:prod": "npm run clean && npm run build:prod && npm run start:prod",
     "start": "webpack-dev-server --config ./webpack.config.js",
     "start:prod": "webpack-dev-server --config ./webpack.production.config.js",
     "build": "webpack --config ./webpack.config.js --progress --colors",
@@ -58,6 +60,8 @@
     "keymirror": "^0.1.1",
     "lodash": "^4.13.1",
     "node-uuid": "^1.4.7",
+    "postcss-assets": "^4.1.0",
+    "postcss-loader": "^0.9.1",
     "react": "^15.1.0",
     "react-bootstrap": "^0.29.5",
     "react-dom": "^15.1.0",

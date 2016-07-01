@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+const baseURL = 'http://localhost:8080/';
 
 module.exports = {
   entry: [
@@ -26,13 +27,13 @@ module.exports = {
       loader: 'file'
     },{
       test   : /\.css$/,
-      loaders: ["style", "css?sourceMap", "resolve-url"]
+      loaders: ["style", "css?sourceMap", "postcss", "resolve-url"]
     },{
       test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
       loader: 'imports?jQuery=jquery'
     },{
       test: /\.sass$/,
-      loaders: ["style", "css?sourceMap", "resolve-url",  "sass?sourceMap"]
+      loaders: ["style", "css?sourceMap", "postcss", "resolve-url",  "sass?sourceMap"]
     }]
   },
   resolve: {
@@ -40,10 +41,11 @@ module.exports = {
   },
   output: {
     path: __dirname + '/dist',
-    publicPath: '/',
+    publicPath: baseURL,
     filename: 'chattigo-webchat.js'
   },
   devServer: {
+    headers: { "Access-Control-Allow-Origin": "*" },
     contentBase: './dist',
     hot: true
   },
@@ -63,6 +65,14 @@ module.exports = {
         }
       ]
     }
+  },
+  postcss: function () {
+    return [
+      require('postcss-assets')({
+        loadPaths: ['dist/'],
+        baseUrl: 'http://localhost:8080/'
+      })
+    ];
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()

@@ -1,5 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
+const autoprefixer = require('autoprefixer');
+const assets = require('postcss-assets');
+const baseURL = 'http://driverwebchat1600.cloudapp.net/';
 
 module.exports = {
   devtool: 'source-map',
@@ -11,7 +14,7 @@ module.exports = {
 
   output: {
     path: __dirname + '/dist',
-    publicPath: '/',
+    publicPath: baseURL,
     filename: 'chattigo-webchat.js'
   },
 
@@ -49,13 +52,13 @@ module.exports = {
       loader: 'file'
     },{
       test   : /\.css$/,
-      loaders: ["style", "css?sourceMap", "resolve-url"]
+      loaders: ["style", "css?sourceMap", "postcss", "resolve-url"]
     },{
       test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
       loader: 'imports?jQuery=jquery'
     },{
       test: /\.sass$/,
-      loaders: ["style", "css?sourceMap", "resolve-url",  "sass?sourceMap"]
+      loaders: ["style", "css?sourceMap", "postcss", "resolve-url", "sass?sourceMap"]
     }]
   },
   
@@ -64,9 +67,18 @@ module.exports = {
   },
 
   devServer: {
+    headers: { "Access-Control-Allow-Origin": "*" },
     contentBase: './dist',
     hot: false
   },
+
+  postcss: [
+    autoprefixer({ browsers: ['last 2 versions'] }),
+    assets({
+        loadPaths: ['dist/'],
+        baseUrl: baseURL
+      })
+  ],
 
   imageWebpackLoader: {
     pngquant:{
