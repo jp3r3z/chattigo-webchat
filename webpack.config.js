@@ -70,7 +70,7 @@ module.exports = {
     return [
       require('postcss-assets')({
         loadPaths: ['dist/'],
-        baseUrl: 'http://localhost:8080/'
+        baseUrl: baseURL
       })
     ];
   },

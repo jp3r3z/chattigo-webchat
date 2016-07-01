@@ -132,7 +132,7 @@ const SETTINGS = {
 ```
 
 | Setting | Description | Type | Default Value |
-|:-------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------:|:--------------------------------------------------------------------------------------------------------------------------:|
+|:-------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
 | `header_text` | Text displayed in the chat widget's upper bar | string | `"Web Chat"` |
 | `message_placeholder` | Placeholder for the send message box | string | `"Introduzca su mensaje..."` |
 | `send_text` | Text displayed in the send button | string | `"Enviar"` |
@@ -142,6 +142,9 @@ const SETTINGS = {
 | `welcome_text` | Welcome message displayed in the login form | string | `"Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión."` |
 | `width` | Number of pixels of the expanded widget's with | int | `300` |
 | `height` | Number of pixels of the expanded widget's height | int | `400` |
+| `send_background_color` | Send message button css `background-color` property | string | `"#0853CB"` |
+| `send_color` | Send message css `color` property | string | `"#FFFFFF"` |
+| `message_list_background_image` | One of: `null`, for using chattigo's default background; `false`, for no background image; or a string containing the absolute url for a background image. | `null`, `false` or url string | `null` |
 
 Expect more customization in future releases.
 

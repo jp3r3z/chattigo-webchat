@@ -9,6 +9,7 @@ import {
     Glyphicon
     } from 'react-bootstrap';
 import { Strings } from '../constants';
+import MessageList from './MessageList';
 
 
 export class MessageForm extends Component {
@@ -26,6 +27,10 @@ export class MessageForm extends Component {
                     <Button
                         type="submit"
                         onClick={this.sendHandler}
+                        style={{
+                            color: this.context.settings.send_color,
+                            backgroundColor: this.context.settings.send_background_color
+                        }}
                         >
                         <Glyphicon glyph={"send"} />
                     </Button>
