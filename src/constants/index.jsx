@@ -26,7 +26,6 @@ export const Strings = {
 
 export const SETTINGS = {
     customer_classname: "customer",
-    locale: "es",
     header_text: Strings.HEADER_TEXT,
     send_text: Strings.SEND,
     login_text: Strings.LOGIN,
@@ -39,5 +38,7 @@ export const SETTINGS = {
     send_color: "#FFFFFF",
     message_list_background_image: null,
     width: 300,
-    height: 400
+    height: 400,
+    locale: "es",
+    scroll_theme: "dark"
 };

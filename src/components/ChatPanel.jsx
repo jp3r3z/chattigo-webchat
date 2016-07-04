@@ -18,6 +18,37 @@ import MessageList from './MessageList';
 
 
 class UnconnectedMessageForm extends Component {
+    componentDidMount() {
+        this.setEnterKeyListener()      
+    }
+
+    setEnterKeyListener() {
+        const formcontrol = this.refs.message;
+        const message_textarea = findDOMNode(formcontrol);
+        
+        try {
+            message_textarea.addEventListerner('keydown', (e) => {
+                if(e.keyCode==13) {
+                    this.sendHandler(e);
+                }
+            });
+        } catch (error) {
+            console.warn('Chattigo:', 'UnconnectedMessageForm:', 'Modern browsers setEnterKeyListener test failed.', error);
+        }
+
+        try {
+            message_textarea.onkeydown = (e) => {
+                e = e || window.event;
+                const keyCode = e.keyCode || e.which;
+                if(keyCode==13) {
+                    this.sendHandler(e);
+                }
+            };
+        } catch (error) {
+            console.warn('Chattigo:', 'UnconnectedMessageForm:', 'Legacy browsers setEnterKeyListener test failed.', error);
+        }
+    }
+
     sendHandler (e) {
         e.preventDefault();
         const formcontrol = this.refs.message;

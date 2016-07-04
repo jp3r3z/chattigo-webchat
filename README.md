@@ -106,8 +106,13 @@ var settings = {
     login_fields: ["Nombre", "Email", "RUT"],
     toggle_background_color: "#0853CB",
     toggle_color: "#FFFFFF",
+    send_background_color: "#0853CB",
+    send_color: "#FFFFFF",
+    message_list_background_image: null,
     width: 300,
-    height: 400
+    height: 400,
+    locale: "es",
+    scroll_theme: "dark"
 };
 
 var chattigo = new Chattigo("<your_API_key>", settings);
@@ -126,8 +131,13 @@ const SETTINGS = {
     login_fields: ["Nombre", "Email", "RUT"],
     toggle_background_color: "#0853CB",
     toggle_color: "#FFFFFF",
+    send_background_color: "#0853CB",
+    send_color: "#FFFFFF",
+    message_list_background_image: null,
     width: 300,
-    height: 400
+    height: 400,
+    locale: "es",
+    scroll_theme: "dark"
 };
 ```
 
@@ -145,6 +155,8 @@ const SETTINGS = {
 | `send_background_color` | Send message button css `background-color` property | string | `"#0853CB"` |
 | `send_color` | Send message css `color` property | string | `"#FFFFFF"` |
 | `message_list_background_image` | One of: `null`, for using chattigo's default background; `false`, for no background image; or a string containing the absolute url for a background image. | `null`, `false` or url string | `null` |
+| `locale` | [Moment.js](http://momentjs.com/docs/#/i18n/) supported locale for displaying dates. | string | `"es"` |
+| `scroll_theme` | [jQuery custom content scroller](http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/scrollbar_themes_demo.html) theme. | string | `"dark"` |
 
 Expect more customization in future releases.
 

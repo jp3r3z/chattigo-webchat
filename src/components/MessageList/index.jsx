@@ -11,7 +11,7 @@ class UnconnectedMessageList extends Component {
         this.selector = "#chattigo-message-list"; 
         $(this.selector).mCustomScrollbar({
             axis:"y",
-            theme: "dark",
+            theme: this.context.settings.scroll_theme,
             setHeight: this.context.settings.height * 0.63,
             mouseWheel:{
                 enable: true,
