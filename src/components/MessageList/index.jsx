@@ -1,20 +1,48 @@
-import React from 'react';
 import 'babel-polyfill';
+import $ from 'jquery';
+import React from 'react';
 import { Component } from 'react';
+import { connect } from 'react-redux';
 import { Panel } from 'react-bootstrap';
 import Message from './Message';
 
-export default class MessageList extends Component {
+class UnconnectedMessageList extends Component {
+    componentDidMount() {
+        this.selector = "#chattigo-message-list"; 
+        $(this.selector).mCustomScrollbar({
+            axis:"y",
+            theme: "dark",
+            setHeight: this.context.settings.height * 0.63,
+            mouseWheel:{
+                enable: true,
+                axis: "y"
+            },
+            scrollButtons: { enable: true },
+            scrollbarPosition: "inside",
+            callbacks:{
+                onInit: function(){
+                    $(this.selector).mCustomScrollbar("scrollTo","bottom");
+                }
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        $(this.selector).mCustomScrollbar("destroy");
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        $(this.selector).mCustomScrollbar("update");
+        $(this.selector).mCustomScrollbar("scrollTo","bottom", {scrollInertia: 0});
+    }
+
     render(){
         let styles = { height: this.context.settings.height * 0.63 };
         const image = this.context.settings.message_list_background_image;
-        console.log('Original image: ', image);
         if (image !== null) {
             if (image == false) {
-                console.log('no image: ', image);
                 Object.assign(styles, { backgroundImage: "none" });
             } else {
-                console.log('image: ', image);
                 Object.assign(styles, { backgroundImage: "url("+image+")" });
             }
         }
@@ -23,13 +51,22 @@ export default class MessageList extends Component {
                 id={"chattigo-message-list"}
                 style={styles}
                 >
-                <div className={"overlay"}></div>
-                <Message/>
-                <Message/>
-                <Message/>
-                <Message/>
+                {this.props.messages.map(message => {
+                    return <Message key={message.id} message={message}/>;
+                })}
             </Panel>
             );
     }
 }
-MessageList.contextTypes = { settings: React.PropTypes.object };
+UnconnectedMessageList.contextTypes = { settings: React.PropTypes.object };
+
+
+const mapStateToProps = (state) => {
+    return {
+        messages: state.messages
+    }
+};
+
+const MessageList = connect(mapStateToProps)(UnconnectedMessageList);
+
+export default MessageList; 

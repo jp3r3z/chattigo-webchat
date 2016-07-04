@@ -9,7 +9,8 @@ export const Visibility = keyMirror({
 export const ActionTypes = keyMirror({
     TOGGLE: null,
     LOGIN: null,
-    LOGOUT: null
+    LOGOUT: null,
+    ADD_MESSAGE: null
 });
 
 export const API = {};
@@ -19,10 +20,13 @@ export const Strings = {
     PLACEHOLDER_MESSAGE: "Introduzca su mensaje...",
     HEADER_TEXT: "Web Chat",
     LOGIN: "Iniciar sesión",
+    ANONYMOUS: "Anónimo",
     WELCOME: "Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión."
 };
 
 export const SETTINGS = {
+    customer_classname: "customer",
+    locale: "es",
     header_text: Strings.HEADER_TEXT,
     send_text: Strings.SEND,
     login_text: Strings.LOGIN,
