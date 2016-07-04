@@ -31,6 +31,9 @@ export const SETTINGS = {
     login_fields: ["Nombre", "Email", "RUT"],
     toggle_background_color: "#0853CB",
     toggle_color: "#FFFFFF",
+    send_background_color: "#0853CB",
+    send_color: "#FFFFFF",
+    message_list_background_image: null,
     width: 300,
     height: 400
 };

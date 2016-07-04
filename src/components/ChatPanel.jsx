@@ -9,22 +9,10 @@ import {
     Glyphicon
     } from 'react-bootstrap';
 import { Strings } from '../constants';
+import MessageList from './MessageList';
 
-export default class MessageList extends Component {
-    render(){
-        return (
-            <Panel
-                id={"chattigo-message-list"}
-                style={{
-                    height: this.context.settings.height * 0.63
-                }}
-                />
-            );
-    }
-}
-MessageList.contextTypes = { settings: React.PropTypes.object };
 
-export default class MessageForm extends Component {
+export class MessageForm extends Component {
     sendHandler (e) {
         e.preventDefault();
         alert("El envío de mensajes no está habilitado todavía.");
@@ -39,6 +27,10 @@ export default class MessageForm extends Component {
                     <Button
                         type="submit"
                         onClick={this.sendHandler}
+                        style={{
+                            color: this.context.settings.send_color,
+                            backgroundColor: this.context.settings.send_background_color
+                        }}
                         >
                         <Glyphicon glyph={"send"} />
                     </Button>
