@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Panel } from 'react-bootstrap';
 import Message from './Message';
 
-class UnconnectedMessageList extends Component {
+class DisconnectedMessageList extends Component {
     componentDidMount() {
         this.selector = "#chattigo-message-list"; 
         $(this.selector).mCustomScrollbar({
@@ -58,7 +58,7 @@ class UnconnectedMessageList extends Component {
             );
     }
 }
-UnconnectedMessageList.contextTypes = { settings: React.PropTypes.object };
+DisconnectedMessageList.contextTypes = { settings: React.PropTypes.object };
 
 
 const mapStateToProps = (state) => {
@@ -67,6 +67,6 @@ const mapStateToProps = (state) => {
     }
 };
 
-const MessageList = connect(mapStateToProps)(UnconnectedMessageList);
+const MessageList = connect(mapStateToProps)(DisconnectedMessageList);
 
 export default MessageList; 

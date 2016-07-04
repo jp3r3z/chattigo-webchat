@@ -17,7 +17,7 @@ import { Strings } from '../constants';
 import MessageList from './MessageList';
 
 
-class UnconnectedMessageForm extends Component {
+class DisconnectedMessageForm extends Component {
     componentDidMount() {
         this.setEnterKeyListener()      
     }
@@ -33,7 +33,7 @@ class UnconnectedMessageForm extends Component {
                 }
             });
         } catch (error) {
-            console.warn('Chattigo:', 'UnconnectedMessageForm:', 'Modern browsers setEnterKeyListener test failed.', error);
+            console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Modern browsers setEnterKeyListener test failed.', error);
         }
 
         try {
@@ -45,7 +45,7 @@ class UnconnectedMessageForm extends Component {
                 }
             };
         } catch (error) {
-            console.warn('Chattigo:', 'UnconnectedMessageForm:', 'Legacy browsers setEnterKeyListener test failed.', error);
+            console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Legacy browsers setEnterKeyListener test failed.', error);
         }
     }
 
@@ -91,7 +91,7 @@ class UnconnectedMessageForm extends Component {
             );
     }
 }
-UnconnectedMessageForm.contextTypes = { settings: React.PropTypes.object };
+DisconnectedMessageForm.contextTypes = { settings: React.PropTypes.object };
 
 const mapStateToProps = (state) => {
     return {
@@ -107,7 +107,7 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-const MessageForm = connect(mapStateToProps, mapDispatchToProps)(UnconnectedMessageForm);
+const MessageForm = connect(mapStateToProps, mapDispatchToProps)(DisconnectedMessageForm);
 
 export default class ChatPanel extends Component {
     render() {
