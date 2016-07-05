@@ -40,5 +40,6 @@ export const SETTINGS = {
     width: 300,
     height: 400,
     locale: "es",
-    scroll_theme: "dark"
+    scroll_theme: "dark",
+    toggle_button_image: null
 };
