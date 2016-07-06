@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import request from 'superagent';
 import { add_message } from '../actions';
-import { WebAPI } from '../constants';
+import { WebAPI, Strings } from '../constants';
 
 class API {
 
@@ -14,10 +14,14 @@ class API {
             request.post(`${WebAPI.v1.ENDPOINTS.SEND_MESSAGE.URL}`)
                 .set('Authorization', `Token token=${this.api_key}`)
                 .set('Accept', 'application/json')
-                .send({ message: message })
+                .send({ message: message, token: this.api_key })
                 .end((error, response) => {
                     if (error) {
-                        console.error("API.send:", response);
+                        if (error.status == 401) {
+                            console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
+                            alert(Strings.AUTH_EXCEPTION_USER_MSG);
+                        }
+                        console.error(`API.send: status: ${response.status} ${response.statusText}. ${response.text}`, response);
                         reject(response);
                     } else {
                         resolve(response);
@@ -31,10 +35,14 @@ class API {
             request.get(`${WebAPI.v1.ENDPOINTS.REQUEST_MESSAGES.URL}`)
                 .set('Authorization', `Token token=${this.api_key}`)
                 .set('Accept', 'application/json')
-                .query({ user: user })
+                .query({ user: user, token: this.api_key })
                 .end((error, response) => {
                     if (error) {
-                        console.error("API.request:", response);
+                        if (error.status == 401) {
+                            console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
+                            alert(Strings.AUTH_EXCEPTION_USER_MSG);
+                        }
+                        console.error(`API.request: status: ${response.status} ${response.statusText}. ${response.text}`, response);
                         reject(response);
                     } else {
                         resolve(response);

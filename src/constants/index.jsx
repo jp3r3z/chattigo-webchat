@@ -38,7 +38,9 @@ export const Strings = {
     ANONYMOUS: "Anónimo",
     WELCOME: "Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión.",
     EXCEPTION_NAME_FIELD_MISSING: "Si se definen campos personalizados de inicio de sesión, debe especificar en la configuración el campo a ser utilizado como nombre (name_field).",
-    EXCEPTION_CHECK_CONFIG: "Por favor revise la configuración del widget de Chattigo."
+    EXCEPTION_CHECK_CONFIG: "Por favor revise la configuración del widget de Chattigo.",
+    AUTH_EXCEPTION_CLIENT_MSG: "Tu API Key es inválido. Por favor contacta con los ejecutivos de Chattigo para obtener un API Key válido.",
+    AUTH_EXCEPTION_USER_MSG: "Ha ocurrido un error con el sistema de chat. De ser posible, por favor notifica al administrador de esta página."
 };
 
 export const SETTINGS = {

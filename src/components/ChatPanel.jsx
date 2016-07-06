@@ -106,7 +106,7 @@ const mapDispatchToProps = (dispatch) => {
             settings.api.send(message).then((response) => {
                 dispatch(add_message(message));
             }).catch((response) => {
-                console.error('Send message:', response);
+                // console.error('Send message:', response);
             });
         }
     };

@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch) => {
                 dispatch(login(settings.login_fields, data));
                 settings.provider.run(data, dispatch);
             }).catch((response) => {
-                console.error('Login:', response);
+                // console.error('Login:', response);
             });
         }
     };
