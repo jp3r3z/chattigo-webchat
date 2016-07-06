@@ -12,7 +12,9 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 import ChattigoWebChat from './components';
+import { MessageProvider } from './api';
 import { Strings, SETTINGS } from './constants';
+import { logout, toggle } from './actions';
 
 class SettingsProvider extends Component {
     getChildContext() {
@@ -43,7 +45,9 @@ class ConfigurationException {
 
 class Chattigo {
     constructor (APIkey, settings = SETTINGS) {
-        this.settings = Object.assign({}, { APIkey: APIkey }, SETTINGS, settings);
+        const key = { APIkey: APIkey };
+        const provider = { provider: new MessageProvider(APIkey) }
+        this.settings = Object.assign({}, key, provider, SETTINGS, settings);
         this.store = configureStore();
         this.container = "chattigo-webchat-container";
     }
@@ -57,6 +61,10 @@ class Chattigo {
         let chattigo = document.createElement("DIV");
         chattigo.id = this.container;
         document.getElementsByTagName('body')[0].appendChild(chattigo);
+        this.store.dispatch(logout());
+        if (this.store.getState().visibility === "EXPANDED") {
+            this.store.dispatch(toggle());
+        }
         render(
             (
                 <Provider store={this.store}>

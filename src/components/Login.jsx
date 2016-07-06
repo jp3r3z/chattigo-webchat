@@ -2,7 +2,6 @@ import 'babel-polyfill';
 import React from 'react';
 import moment from 'moment';
 import API from '../api';
-import { MessageProvider } from '../api';
 import { v4 } from 'node-uuid';
 import { Component } from 'react';
 import { findDOMNode } from 'react-dom';
@@ -28,7 +27,7 @@ class LoginForm extends Component {
             prop[kebabCase(field)] = findDOMNode(this.refs[kebabCase(field)]).value;
             data = Object.assign(data, prop);
         });
-        this.props.onLogin(data, this.props.session, this.context.settings);
+        this.props.onLogin(data, this.context.settings);
     }
 
     render(){
@@ -64,10 +63,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (data, session, settings) => {
-            dispatch(login(settings.login_fields, data))
-            const provider = new MessageProvider(settings.APIkey);
-            provider.run(data, dispatch);
+        onLogin: (data, settings) => {
             // const message = {
             //     id: v4(),
             //     author: {
@@ -85,6 +81,8 @@ const mapDispatchToProps = (dispatch) => {
             // }).catch((response) => {
             //     console.log('Login:', response);
             // });
+            dispatch(login(settings.login_fields, data))
+            settings.provider.run(data, dispatch);
         }
     };
 };

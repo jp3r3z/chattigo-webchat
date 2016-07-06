@@ -20,7 +20,6 @@ class API {
                         console.error("API.send:", response);
                         reject(response);
                     } else {
-                        console.log("API.send:", response);
                         resolve(response);
                     }
                 });
@@ -37,7 +36,6 @@ class API {
                         console.error("API.request:", response);
                         reject(response);
                     } else {
-                        console.log("API.request:", response);
                         resolve(response);
                     }
                 });
@@ -46,7 +44,7 @@ class API {
 }
 
 export class MessageProvider {
-    constructor(token, timespan=3000) {
+    constructor(token, timespan=5000) {
         this.tag = 'MessageProvider';
         this.api = new API(token);
         this.timespan = timespan;
@@ -55,7 +53,11 @@ export class MessageProvider {
     run(user, dispatch){
         setTimeout(() => { 
             this.api.request(user).then((data) => {
-                dispatch(add_message(data.body))
+                if (data.body !== []) {
+                    for (let message of data.body) {
+                        dispatch(add_message(data.body));
+                    } 
+                }
                 this.run(user, dispatch);
             }).catch((error) => {
                 console.error(this.tag, error);
