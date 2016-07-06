@@ -20,7 +20,6 @@ class API {
                         console.error("API.send:", response);
                         reject(response);
                     } else {
-                        console.log("API.send:", response);
                         resolve(response);
                     }
                 });

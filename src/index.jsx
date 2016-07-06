@@ -15,7 +15,7 @@ import ChattigoWebChat from './components';
 import { MessageProvider } from './api';
 import API from './api';
 import { Strings, SETTINGS } from './constants';
-import { logout, toggle } from './actions';
+import { logout, toggle, clear_chat } from './actions';
 
 class SettingsProvider extends Component {
     getChildContext() {
@@ -64,6 +64,7 @@ class Chattigo {
         chattigo.id = this.container;
         document.getElementsByTagName('body')[0].appendChild(chattigo);
         this.store.dispatch(logout());
+        this.store.dispatch(clear_chat());
         if (this.store.getState().visibility === "EXPANDED") {
             this.store.dispatch(toggle());
         }

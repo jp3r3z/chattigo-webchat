@@ -34,7 +34,7 @@ class DisconnectedMessageForm extends Component {
                 }
             });
         } catch (error) {
-            console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Modern browsers setEnterKeyListener test failed.', error);
+            // console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Modern browsers setEnterKeyListener test failed.', error);
         }
 
         try {
@@ -46,7 +46,7 @@ class DisconnectedMessageForm extends Component {
                 }
             };
         } catch (error) {
-            console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Legacy browsers setEnterKeyListener test failed.', error);
+            // console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Legacy browsers setEnterKeyListener test failed.', error);
         }
     }
 
@@ -67,7 +67,7 @@ class DisconnectedMessageForm extends Component {
                 content: message_textarea.value
             };
             message_textarea.value = "";
-            this.props.onAddMessage(message);
+            this.props.onAddMessage(message, this.context.settings);
         }
     }
     render() {
@@ -102,8 +102,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAddMessage: (message) => {
-            dispatch(add_message(message))
+        onAddMessage: (message, settings) => {
+            settings.api.send(message).then((response) => {
+                dispatch(add_message(message));
+            }).catch((response) => {
+                console.error('Send message:', response);
+            });
         }
     };
 };

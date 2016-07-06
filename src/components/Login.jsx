@@ -30,7 +30,6 @@ class LoginForm extends Component {
             data = Object.assign(data, { user: this.props.session.user });
         else
             data = Object.assign(data, { user: v4() });
-        console.log('LoginForm data:', data);
         this.props.onLogin(data, this.context.settings);
     }
 
@@ -79,9 +78,8 @@ const mapDispatchToProps = (dispatch) => {
                 type: "text",
                 content: JSON.stringify(data)
             };
-            console.log('Login message:', message);
             settings.api.send(message).then((response) => {
-                dispatch(login(settings.login_fields, data))
+                dispatch(login(settings.login_fields, data));
                 settings.provider.run(data, dispatch);
             }).catch((response) => {
                 console.error('Login:', response);
