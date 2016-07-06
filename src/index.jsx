@@ -12,7 +12,10 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 import ChattigoWebChat from './components';
-import { SETTINGS } from './constants';
+import { MessageProvider } from './api';
+import API from './api';
+import { Strings, SETTINGS } from './constants';
+import { logout, toggle, clear_chat } from './actions';
 
 class SettingsProvider extends Component {
     getChildContext() {
@@ -28,17 +31,43 @@ SettingsProvider.childContextTypes = {
 };
 
 
+class ConfigurationException {
+    constructor(cause, message=Strings.EXCEPTION_CHECK_CONFIG) {
+        this.name = "ConfigurationException";
+        this.cause = cause;
+        this.message = message;
+    }
+
+    toString() {
+        return this.name + ": " + this.cause + " " + this.message;
+    };
+}
+
+
 class Chattigo {
     constructor (APIkey, settings = SETTINGS) {
-        this.settings = Object.assign({}, { APIkey: APIkey }, SETTINGS, settings);
+        const key = { APIkey: APIkey };
+        const api = { api: new API(APIkey) }
+        const provider = { provider: new MessageProvider(APIkey, api.api) }
+        this.settings = Object.assign({}, key, api, provider, SETTINGS, settings);
         this.store = configureStore();
         this.container = "chattigo-webchat-container";
     }
     init() {
+        if (this.settings.login_fields !== []) {
+            if ($.inArray(this.settings.name_field, this.settings.login_fields) == -1) {
+                throw new ConfigurationException(Strings.EXCEPTION_NAME_FIELD_MISSING);
+            }
+        }
         require('./assets/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js')($);
         let chattigo = document.createElement("DIV");
         chattigo.id = this.container;
         document.getElementsByTagName('body')[0].appendChild(chattigo);
+        this.store.dispatch(logout());
+        this.store.dispatch(clear_chat());
+        if (this.store.getState().visibility === "EXPANDED") {
+            this.store.dispatch(toggle());
+        }
         render(
             (
                 <Provider store={this.store}>

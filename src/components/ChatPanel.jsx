@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import { v4 } from 'node-uuid';
+import { lowerCase } from 'lodash/string';
 import {
     Panel,
     Form,
@@ -33,7 +34,7 @@ class DisconnectedMessageForm extends Component {
                 }
             });
         } catch (error) {
-            console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Modern browsers setEnterKeyListener test failed.', error);
+            // console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Modern browsers setEnterKeyListener test failed.', error);
         }
 
         try {
@@ -45,7 +46,7 @@ class DisconnectedMessageForm extends Component {
                 }
             };
         } catch (error) {
-            console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Legacy browsers setEnterKeyListener test failed.', error);
+            // console.warn('Chattigo:', 'DisconnectedMessageForm:', 'Legacy browsers setEnterKeyListener test failed.', error);
         }
     }
 
@@ -58,7 +59,7 @@ class DisconnectedMessageForm extends Component {
                 id: v4(),
                 author: {
                     id: this.props.session.user,
-                    name: this.props.session.nombre || Strings.ANONYMOUS
+                    name: this.props.session[lowerCase(this.context.settings.name_field)] || Strings.ANONYMOUS
                 },
                 timestamp: moment().valueOf(),
                 origin: "customer",
@@ -66,7 +67,7 @@ class DisconnectedMessageForm extends Component {
                 content: message_textarea.value
             };
             message_textarea.value = "";
-            this.props.onAddMessage(message);
+            this.props.onAddMessage(message, this.context.settings);
         }
     }
     render() {
@@ -101,8 +102,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAddMessage: (message) => {
-            dispatch(add_message(message))
+        onAddMessage: (message, settings) => {
+            settings.api.send(message).then((response) => {
+                dispatch(add_message(message));
+            }).catch((response) => {
+                console.error('Send message:', response);
+            });
         }
     };
 };

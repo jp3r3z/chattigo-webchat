@@ -1,6 +1,8 @@
+const CHATTIGO_STATE = 'chattigo-state'
+
 export const loadState = () => {
     try {
-        const serializedState = localStorage.getItem('state');
+        const serializedState = localStorage.getItem(CHATTIGO_STATE);
         if (serializedState === null)
             return undefined;
         return JSON.parse(serializedState);
@@ -16,7 +18,7 @@ export const saveState = (state) => {
     }
     try {
         const serializedState = JSON.stringify(Object.assign({}, previousState, state));
-        localStorage.setItem('state', serializedState);
+        localStorage.setItem(CHATTIGO_STATE, serializedState);
     } catch (error) {
         console.log('localStorage: ', 'problem saving current state: ', error);
     }
