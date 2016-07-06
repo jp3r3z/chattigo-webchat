@@ -1,7 +1,6 @@
 import 'babel-polyfill';
 import React from 'react';
 import moment from 'moment';
-import API from '../api';
 import { v4 } from 'node-uuid';
 import { Component } from 'react';
 import { findDOMNode } from 'react-dom';
@@ -27,6 +26,11 @@ class LoginForm extends Component {
             prop[kebabCase(field)] = findDOMNode(this.refs[kebabCase(field)]).value;
             data = Object.assign(data, prop);
         });
+        if (this.props.session.user)
+            data = Object.assign(data, { user: this.props.session.user });
+        else
+            data = Object.assign(data, { user: v4() });
+        console.log('LoginForm data:', data);
         this.props.onLogin(data, this.context.settings);
     }
 
@@ -64,25 +68,24 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onLogin: (data, settings) => {
-            // const message = {
-            //     id: v4(),
-            //     author: {
-            //         id: data.user,
-            //         name: data[lowerCase(settings.name_field)] || Strings.ANONYMOUS
-            //     },
-            //     timestamp: moment().valueOf(),
-            //     origin: "customer",
-            //     type: "text",
-            //     content: JSON.stringify(data)
-            // };
-            // const api = new API(settings.APIkey);
-            // api.send(message).then((response) => {
-            //     dispatch(login(settings.login_fields, data))
-            // }).catch((response) => {
-            //     console.log('Login:', response);
-            // });
-            dispatch(login(settings.login_fields, data))
-            settings.provider.run(data, dispatch);
+            const message = {
+                id: v4(),
+                author: {
+                    id: data.user,
+                    name: data[lowerCase(settings.name_field)] || Strings.ANONYMOUS
+                },
+                timestamp: moment().valueOf(),
+                origin: "customer",
+                type: "text",
+                content: JSON.stringify(data)
+            };
+            console.log('Login message:', message);
+            settings.api.send(message).then((response) => {
+                dispatch(login(settings.login_fields, data))
+                settings.provider.run(data, dispatch);
+            }).catch((response) => {
+                console.error('Login:', response);
+            });
         }
     };
 };

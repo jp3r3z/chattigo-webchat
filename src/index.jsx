@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 import ChattigoWebChat from './components';
 import { MessageProvider } from './api';
+import API from './api';
 import { Strings, SETTINGS } from './constants';
 import { logout, toggle } from './actions';
 
@@ -47,7 +48,8 @@ class Chattigo {
     constructor (APIkey, settings = SETTINGS) {
         const key = { APIkey: APIkey };
         const provider = { provider: new MessageProvider(APIkey) }
-        this.settings = Object.assign({}, key, provider, SETTINGS, settings);
+        const api = { api: new API(APIkey) }
+        this.settings = Object.assign({}, key, api, provider, SETTINGS, settings);
         this.store = configureStore();
         this.container = "chattigo-webchat-container";
     }

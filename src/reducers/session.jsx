@@ -8,6 +8,8 @@ const session = ( state = { is_loggedin: false }, action) => {
             let session = { is_loggedin: true };
             if (state && state.user) {
                 session.user = state.user;
+            } else if (action.data && action.data.user) {
+                session.user = action.data.user;
             } else {
                 session.user = v4();
             }
