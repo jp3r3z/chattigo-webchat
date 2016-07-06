@@ -10,7 +10,8 @@ export const ActionTypes = keyMirror({
     TOGGLE: null,
     LOGIN: null,
     LOGOUT: null,
-    ADD_MESSAGE: null
+    ADD_MESSAGE: null,
+    CLEAR_CHAT: null
 });
 
 const ROOT = "http://localhost:3000";

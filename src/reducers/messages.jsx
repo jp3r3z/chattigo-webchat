@@ -9,6 +9,8 @@ const messages = (state = [], action) => {
                 ...state,
                 action.message,
             ];
+        case ActionTypes.CLEAR_CHAT:
+            return [];
         default:
             return state;
     }

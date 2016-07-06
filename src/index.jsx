@@ -47,8 +47,8 @@ class ConfigurationException {
 class Chattigo {
     constructor (APIkey, settings = SETTINGS) {
         const key = { APIkey: APIkey };
-        const provider = { provider: new MessageProvider(APIkey) }
         const api = { api: new API(APIkey) }
+        const provider = { provider: new MessageProvider(APIkey, api.api) }
         this.settings = Object.assign({}, key, api, provider, SETTINGS, settings);
         this.store = configureStore();
         this.container = "chattigo-webchat-container";
