@@ -1,5 +1,9 @@
 import 'babel-polyfill';
 import React from 'react';
+import moment from 'moment';
+import API from '../api';
+import { MessageProvider } from '../api';
+import { v4 } from 'node-uuid';
 import { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
@@ -10,7 +14,7 @@ import {
     FormControl
     } from 'react-bootstrap';
 import { Strings } from '../constants';
-import { kebabCase } from 'lodash/string';
+import { kebabCase, lowerCase } from 'lodash/string';
 import { login } from '../actions';
 
 
@@ -24,7 +28,7 @@ class LoginForm extends Component {
             prop[kebabCase(field)] = findDOMNode(this.refs[kebabCase(field)]).value;
             data = Object.assign(data, prop);
         });
-        this.props.onLogin(fields, data);
+        this.props.onLogin(data, this.props.session, this.context.settings);
     }
 
     render(){
@@ -60,8 +64,27 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (fields, data) => {
-            dispatch(login(fields, data))
+        onLogin: (data, session, settings) => {
+            dispatch(login(settings.login_fields, data))
+            const provider = new MessageProvider(settings.APIkey);
+            provider.run(data, dispatch);
+            // const message = {
+            //     id: v4(),
+            //     author: {
+            //         id: data.user,
+            //         name: data[lowerCase(settings.name_field)] || Strings.ANONYMOUS
+            //     },
+            //     timestamp: moment().valueOf(),
+            //     origin: "customer",
+            //     type: "text",
+            //     content: JSON.stringify(data)
+            // };
+            // const api = new API(settings.APIkey);
+            // api.send(message).then((response) => {
+            //     dispatch(login(settings.login_fields, data))
+            // }).catch((response) => {
+            //     console.log('Login:', response);
+            // });
         }
     };
 };

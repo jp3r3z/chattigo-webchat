@@ -12,7 +12,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 import ChattigoWebChat from './components';
-import { SETTINGS } from './constants';
+import { Strings, SETTINGS } from './constants';
 
 class SettingsProvider extends Component {
     getChildContext() {
@@ -28,6 +28,19 @@ SettingsProvider.childContextTypes = {
 };
 
 
+class ConfigurationException {
+    constructor(cause, message=Strings.EXCEPTION_CHECK_CONFIG) {
+        this.name = "ConfigurationException";
+        this.cause = cause;
+        this.message = message;
+    }
+
+    toString() {
+        return this.name + ": " + this.cause + " " + this.message;
+    };
+}
+
+
 class Chattigo {
     constructor (APIkey, settings = SETTINGS) {
         this.settings = Object.assign({}, { APIkey: APIkey }, SETTINGS, settings);
@@ -35,6 +48,11 @@ class Chattigo {
         this.container = "chattigo-webchat-container";
     }
     init() {
+        if (this.settings.login_fields !== []) {
+            if ($.inArray(this.settings.name_field, this.settings.login_fields) == -1) {
+                throw new ConfigurationException(Strings.EXCEPTION_NAME_FIELD_MISSING);
+            }
+        }
         require('./assets/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js')($);
         let chattigo = document.createElement("DIV");
         chattigo.id = this.container;

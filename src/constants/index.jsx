@@ -13,7 +13,21 @@ export const ActionTypes = keyMirror({
     ADD_MESSAGE: null
 });
 
-export const API = {};
+const ROOT = "http://localhost:3000";
+export const WebAPI = {
+    v1: {
+        ENDPOINTS: {
+            SEND_MESSAGE: {
+                method: "post",
+                URL: `${ROOT}/api/v1/chat`
+            },
+            REQUEST_MESSAGES: {
+                method: "get",
+                URL: `${ROOT}/api/v1/chat`
+            }
+        }
+    }
+};
 
 export const Strings = {
     SEND: "Enviar",
@@ -21,7 +35,9 @@ export const Strings = {
     HEADER_TEXT: "Web Chat",
     LOGIN: "Iniciar sesión",
     ANONYMOUS: "Anónimo",
-    WELCOME: "Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión."
+    WELCOME: "Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión.",
+    EXCEPTION_NAME_FIELD_MISSING: "Si se definen campos personalizados de inicio de sesión, debe especificar en la configuración el campo a ser utilizado como nombre (name_field).",
+    EXCEPTION_CHECK_CONFIG: "Por favor revise la configuración del widget de Chattigo."
 };
 
 export const SETTINGS = {
@@ -41,5 +57,6 @@ export const SETTINGS = {
     height: 400,
     locale: "es",
     scroll_theme: "dark",
-    toggle_button_image: null
+    toggle_button_image: null,
+    name_field: "Nombre"
 };

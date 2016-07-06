@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import { v4 } from 'node-uuid';
+import { lowerCase } from 'lodash/string';
 import {
     Panel,
     Form,
@@ -58,7 +59,7 @@ class DisconnectedMessageForm extends Component {
                 id: v4(),
                 author: {
                     id: this.props.session.user,
-                    name: this.props.session.nombre || Strings.ANONYMOUS
+                    name: this.props.session[lowerCase(this.context.settings.name_field)] || Strings.ANONYMOUS
                 },
                 timestamp: moment().valueOf(),
                 origin: "customer",
