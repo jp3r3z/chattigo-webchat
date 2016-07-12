@@ -13,3 +13,12 @@ export const login = (fields, data) => ({
 export const logout = () => ({
     type: ActionTypes.LOGOUT
 })
+
+export const add_message = (message) => ({
+    type: ActionTypes.ADD_MESSAGE,
+    message: message
+})
+
+export const clear_chat = () => ({
+    type: ActionTypes.CLEAR_CHAT
+})

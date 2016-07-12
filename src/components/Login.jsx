@@ -1,5 +1,7 @@
 import 'babel-polyfill';
 import React from 'react';
+import moment from 'moment';
+import { v4 } from 'node-uuid';
 import { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
@@ -10,7 +12,7 @@ import {
     FormControl
     } from 'react-bootstrap';
 import { Strings } from '../constants';
-import { kebabCase } from 'lodash/string';
+import { kebabCase, lowerCase } from 'lodash/string';
 import { login } from '../actions';
 
 
@@ -24,7 +26,11 @@ class LoginForm extends Component {
             prop[kebabCase(field)] = findDOMNode(this.refs[kebabCase(field)]).value;
             data = Object.assign(data, prop);
         });
-        this.props.onLogin(fields, data);
+        if (this.props.session.user)
+            data = Object.assign(data, { user: this.props.session.user });
+        else
+            data = Object.assign(data, { user: v4() });
+        this.props.onLogin(data, this.context.settings);
     }
 
     render(){
@@ -60,8 +66,24 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (fields, data) => {
-            dispatch(login(fields, data))
+        onLogin: (data, settings) => {
+            const message = {
+                id: v4(),
+                author: {
+                    id: data.user,
+                    name: data[lowerCase(settings.name_field)] || Strings.ANONYMOUS
+                },
+                timestamp: moment().valueOf(),
+                origin: "customer",
+                type: "text",
+                content: JSON.stringify(data)
+            };
+            settings.api.send(message).then((response) => {
+                dispatch(login(settings.login_fields, data));
+                settings.provider.run(data, dispatch);
+            }).catch((response) => {
+                // console.error('Login:', response);
+            });
         }
     };
 };

@@ -4,7 +4,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Panel, Button, Glyphicon } from 'react-bootstrap';
 import { Visibility } from '../constants';
-import { toggle, logout } from '../actions';
+import { toggle, logout, clear_chat } from '../actions';
 import Chat from './Chat';
 
 class Header extends Component {
@@ -23,7 +23,7 @@ class Header extends Component {
         let logout = null;
         if (this.props.is_loggedin) {
             logout = this.renderButton(
-                this.props.logout,
+                (()=> this.props.logout(this.context.settings)),
                 classNames('chattigo-top-bar-btn', 'chattigo-logout'),
                 'log-out');
         }
@@ -50,10 +50,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         toggle: () => {
-            dispatch(toggle())
+            dispatch(toggle());
         },
-        logout: () => {
-            dispatch(logout())
+        logout: (settings) => {
+            settings.provider.stop();
+            dispatch(clear_chat());
+            dispatch(logout());
         }
     };
 };
@@ -66,7 +68,7 @@ export default class WebChat extends Component {
         return (
             <Panel
                 header={header}
-                id={"widget"}
+                id={"chattigo-widget"}
                 className={Visibility.EXPANDED.toLowerCase()}
                 style={{
                     width: this.context.settings.width,

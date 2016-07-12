@@ -1,6 +1,6 @@
 {
   "name": "chattigo-webchat",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Web chat client for Chattigo support service.",
   "main": "src/index.js",
   "scripts": {
@@ -58,8 +58,10 @@
     "bootstrap-sass": "^3.3.6",
     "classnames": "^2.2.5",
     "jquery": "^3.0.0",
+    "jquery-mousewheel": "^3.1.13",
     "keymirror": "^0.1.1",
     "lodash": "^4.13.1",
+    "moment": "^2.14.1",
     "node-uuid": "^1.4.7",
     "postcss-assets": "^4.1.0",
     "postcss-loader": "^0.9.1",
@@ -67,7 +69,9 @@
     "react-bootstrap": "^0.29.5",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",
-    "redux": "^3.5.2"
+    "redux": "^3.5.2",
+    "superagent": "^2.0.0",
+    "validator": "^5.4.0"
   },
   "babel": {
     "presets": [

@@ -12,7 +12,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: "react-hot!babel"
+      loaders: ["react-hot", "babel"]
     },{
       test: /.*\.(gif|png|jpe?g|svg)$/i,
       loaders: [
@@ -70,7 +70,7 @@ module.exports = {
     return [
       require('postcss-assets')({
         loadPaths: ['dist/'],
-        baseUrl: 'http://localhost:8080/'
+        baseUrl: baseURL
       })
     ];
   },
