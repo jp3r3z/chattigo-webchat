@@ -1,4 +1,9 @@
 ![Logo Chattigo](https://raw.githubusercontent.com/throoze/chattigo-webchat/develop/src/assets/images/CHATTIGO.png)
+[![npm version](https://badge.fury.io/js/chattigo-webchat.svg)](https://badge.fury.io/js/chattigo-webchat)
+[![Dependency Status](https://david-dm.org/throoze/chattigo-webchat.svg)](https://david-dm.org/throoze/chattigo-webchat)
+[![devDependency Status](https://david-dm.org/throoze/chattigo-webchat/dev-status.svg)](https://david-dm.org/throoze/chattigo-webchat#info=devDependencies)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
+[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 # Chattigo's webchat-client
 Webchat client for chattigo support service.
 
