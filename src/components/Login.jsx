@@ -69,6 +69,7 @@ const mapDispatchToProps = (dispatch) => {
         onLogin: (data, settings) => {
             const message = {
                 id: v4(),
+                new_session: true,
                 author: {
                     id: data.user,
                     name: data[lowerCase(settings.name_field)] || Strings.ANONYMOUS
