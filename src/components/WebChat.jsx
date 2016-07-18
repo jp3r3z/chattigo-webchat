@@ -45,7 +45,7 @@ Header.contextTypes = { settings: React.PropTypes.object };
 
 const mapStateToProps = (state) => {
     return {
-        is_loggedin: state.session.is_loggedin
+        is_loggedin: state.session.is_loggedin,
         user: (settings) => ({
             id: state.session.user,
             name: state.session[lowerCase(settings.name_field)]
