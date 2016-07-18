@@ -5,6 +5,7 @@ import { v4 } from 'node-uuid';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Panel, Button, Glyphicon } from 'react-bootstrap';
+import { lowerCase } from 'lodash/string';
 import { Visibility, Strings } from '../constants';
 import { toggle, logout, clear_chat } from '../actions';
 import Chat from './Chat';
