@@ -14,8 +14,8 @@ export const ActionTypes = keyMirror({
     CLEAR_CHAT: null
 });
 
-const ROOT = "http://localhost:3000";
-// const ROOT = "http://driverwebchat1600.cloudapp.net";
+// const ROOT = "http://localhost:3000";
+const ROOT = "http://driverwebchat1600.cloudapp.net";
 export const WebAPI = {
     v1: {
         ENDPOINTS: {
