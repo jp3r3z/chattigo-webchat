@@ -1,9 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
+import moment from 'moment';
+import { v4 } from 'node-uuid';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Panel, Button, Glyphicon } from 'react-bootstrap';
-import { Visibility } from '../constants';
+import { Visibility, Strings } from '../constants';
 import { toggle, logout, clear_chat } from '../actions';
 import Chat from './Chat';
 
@@ -23,7 +25,7 @@ class Header extends Component {
         let logout = null;
         if (this.props.is_loggedin) {
             logout = this.renderButton(
-                (()=> this.props.logout(this.context.settings)),
+                (()=> this.props.logout(this.context.settings, this.props.user)),
                 classNames('chattigo-top-bar-btn', 'chattigo-logout'),
                 'log-out');
         }
@@ -44,6 +46,10 @@ Header.contextTypes = { settings: React.PropTypes.object };
 const mapStateToProps = (state) => {
     return {
         is_loggedin: state.session.is_loggedin
+        user: (settings) => ({
+            id: state.session.user,
+            name: state.session[lowerCase(settings.name_field)]
+        })
     }
 }
 
@@ -52,10 +58,22 @@ const mapDispatchToProps = (dispatch) => {
         toggle: () => {
             dispatch(toggle());
         },
-        logout: (settings) => {
-            settings.provider.stop();
-            dispatch(clear_chat());
-            dispatch(logout());
+        logout: (settings, user) => {
+            const message = {
+                id: v4(),
+                author: user(settings),
+                timestamp: moment().valueOf(),
+                origin: "customer",
+                type: "text",
+                content: Strings.CLIENT_LOGGED_OUT
+            };
+            settings.api.send(message).then((response) => {
+                settings.provider.stop();
+                dispatch(clear_chat());
+                dispatch(logout());
+            }).catch((response) => {
+                // console.error('Login:', response);
+            });
         }
     };
 };
