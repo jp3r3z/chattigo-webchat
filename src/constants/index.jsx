@@ -42,7 +42,7 @@ export const Strings = {
     EXCEPTION_CHECK_CONFIG: "Por favor revise la configuración del widget de Chattigo.",
     AUTH_EXCEPTION_CLIENT_MSG: "Tu API Key es inválido. Por favor contacta con los ejecutivos de Chattigo para obtener un API Key válido.",
     AUTH_EXCEPTION_USER_MSG: "Ha ocurrido un error con el sistema de chat. De ser posible, por favor notifica al administrador de esta página.",
-    CLIENT_LOGGED_OUT: "EL CLIENTE SE DESCONECTÓ"
+    CLIENT_LOGGED_OUT: "CLIENTE DESCONECTADO"
 };
 
 export const SETTINGS = {
