@@ -63,6 +63,7 @@ const mapDispatchToProps = (dispatch) => {
             const message = {
                 id: v4(),
                 author: user(settings),
+                logout: true,
                 timestamp: moment().valueOf(),
                 origin: "customer",
                 type: "text",
