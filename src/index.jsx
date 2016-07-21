@@ -3,7 +3,6 @@
  */
 import 'bootstrap-loader';
 require('./assets/stylesheets/style.sass');
-require('./assets/custom-scrollbar/jquery.mCustomScrollbar.min.css');
 import $ from 'jquery';
 import 'babel-polyfill';
 import React from 'react';
@@ -59,7 +58,6 @@ class Chattigo {
                 throw new ConfigurationException(Strings.EXCEPTION_NAME_FIELD_MISSING);
             }
         }
-        require('./assets/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js')($);
         let chattigo = document.createElement("DIV");
         chattigo.id = this.container;
         document.getElementsByTagName('body')[0].appendChild(chattigo);

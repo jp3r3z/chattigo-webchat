@@ -8,32 +8,13 @@ import Message from './Message';
 
 class DisconnectedMessageList extends Component {
     componentDidMount() {
-        this.selector = "#chattigo-message-list"; 
-        $(this.selector).mCustomScrollbar({
-            axis:"y",
-            theme: this.context.settings.scroll_theme,
-            setHeight: this.context.settings.height * 0.63,
-            mouseWheel:{
-                enable: true,
-                axis: "y"
-            },
-            scrollButtons: { enable: true },
-            scrollbarPosition: "inside",
-            callbacks:{
-                onInit: function(){
-                    $(this.selector).mCustomScrollbar("scrollTo","bottom");
-                }
-            }
-        });
-    }
-
-    componentWillUnmount() {
-        $(this.selector).mCustomScrollbar("destroy");
+        this.selector = "#chattigo-message-list";
     }
 
     componentDidUpdate(prevProps, prevState) {
-        $(this.selector).mCustomScrollbar("update");
-        $(this.selector).mCustomScrollbar("scrollTo","bottom", {scrollInertia: 0});
+        $(this.selector).stop().animate({
+            scrollTop: $(this.selector)[0].scrollHeight
+        }, 800);
     }
 
     render(){

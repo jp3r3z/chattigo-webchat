@@ -117,7 +117,6 @@ var settings = {
     width: 300,
     height: 400,
     locale: "es",
-    scroll_theme: "dark",
     toggle_button_image: null,
     name_field: "Nombre"
 };
@@ -144,7 +143,6 @@ const SETTINGS = {
     width: 300,
     height: 400,
     locale: "es",
-    scroll_theme: "dark",
     toggle_button_image: null,
     name_field: "Nombre"
 };
@@ -165,7 +163,6 @@ const SETTINGS = {
 | `send_color` | Send message css `color` property | string | `"#FFFFFF"` |
 | `message_list_background_image` | One of: `null`, for using chattigo's default background; `false`, for no background image; or a string containing the absolute url for a background image. | `null`, `false` or url string | `null` |
 | `locale` | [Moment.js](http://momentjs.com/docs/#/i18n/) supported locale for displaying dates. | string | `"es"` |
-| `scroll_theme` | [jQuery custom content scroller](http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/scrollbar_themes_demo.html) theme. | string | `"dark"` |
 | `toggle_button_image` | URL for an image to be displayed in the collapsed chattigo's widget; a valid glyphicon name as documentend in [bootstrap's glyphicon documentation](http://getbootstrap.com/components/#glyphicons); or null for chattigo's default image. | string or `null` | `null` |
 | `name_field` | Name of the field defined in `form_fields` which is going to be used as the user display name. Note that if you customize `form_fields`, you have to customize this setting too, and they need to be consistent. | string | `'Nombre'` |
 
