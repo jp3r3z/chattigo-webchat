@@ -13,7 +13,7 @@ import {
     FormControl,
     Glyphicon
     } from 'react-bootstrap';
-import { add_message } from '../actions';
+import { add_message, logout } from '../actions';
 import { Strings } from '../constants';
 import MessageList from './MessageList';
 
@@ -114,12 +114,73 @@ const mapDispatchToProps = (dispatch) => {
 
 const MessageForm = connect(mapStateToProps, mapDispatchToProps)(DisconnectedMessageForm);
 
+
+class DisconnectedLogout extends Component {
+    logoutHandler (e) {
+        e.preventDefault();
+        this.props.logout(this.context.settings, this.props.user);
+    }
+
+    render() {
+        return (
+            <Button
+                id="chattigo-logout"
+                onClick={(e) => this.logoutHandler(e)}
+                style={{
+                    color: this.context.settings.send_color,
+                    backgroundColor: this.context.settings.send_background_color
+                }}
+                >
+                <Glyphicon glyph={"log-out"} />
+                {Strings.LOGOUT}
+            </Button>
+            );
+    }
+}
+DisconnectedLogout.contextTypes = { settings: React.PropTypes.object };
+
+const mapLogoutStateToProps = (state) => {
+    return {
+        user: (settings) => ({
+            id: state.session.user,
+            name: state.session[lowerCase(settings.name_field)]
+        })
+    }
+}
+
+const mapLogoutDispatchToProps = (dispatch) => {
+    return {
+        logout: (settings, user) => {
+            const message = {
+                id: v4(),
+                author: user(settings),
+                logout: true,
+                timestamp: moment().valueOf(),
+                origin: "customer",
+                type: "text",
+                content: Strings.CLIENT_LOGGED_OUT
+            };
+            settings.api.send(message).then((response) => {
+                console.log("loging out...");
+                settings.provider.stop();
+                dispatch(logout());
+                console.log("logged out!");
+            }).catch((response) => {
+                // console.error('Login:', response);
+            });
+        }
+    };
+};
+
+const Logout = connect(mapLogoutStateToProps, mapLogoutDispatchToProps)(DisconnectedLogout);
+
 export default class ChatPanel extends Component {
     render() {
         return (
             <div style={{ height: '100%' }} >
                 <MessageList/>
                 <MessageForm/>
+                <Logout/>
             </div>
             );
     }

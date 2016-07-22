@@ -36,6 +36,7 @@ export const Strings = {
     PLACEHOLDER_MESSAGE: "Introduzca su mensaje...",
     HEADER_TEXT: "Web Chat",
     LOGIN: "Iniciar sesión",
+    LOGOUT: "Terminar Chat",
     ANONYMOUS: "Anónimo",
     WELCOME: "Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión.",
     EXCEPTION_NAME_FIELD_MISSING: "Si se definen campos personalizados de inicio de sesión, debe especificar en la configuración el campo a ser utilizado como nombre (name_field).",

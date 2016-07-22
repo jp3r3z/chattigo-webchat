@@ -9,6 +9,9 @@ import Message from './Message';
 class DisconnectedMessageList extends Component {
     componentDidMount() {
         this.selector = "#chattigo-message-list";
+        $(this.selector).stop().animate({
+            scrollTop: $(this.selector)[0].scrollHeight
+        }, 800);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -18,7 +21,7 @@ class DisconnectedMessageList extends Component {
     }
 
     render(){
-        let styles = { height: this.context.settings.height * 0.63 };
+        let styles = { height: this.context.settings.height * 0.58 };
         const image = this.context.settings.message_list_background_image;
         if (image !== null) {
             if (image == false) {

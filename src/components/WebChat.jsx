@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Panel, Button, Glyphicon } from 'react-bootstrap';
 import { lowerCase } from 'lodash/string';
 import { Visibility, Strings } from '../constants';
-import { toggle, logout } from '../actions';
+import { toggle } from '../actions';
 import Chat from './Chat';
 
 class Header extends Component {
@@ -23,13 +23,6 @@ class Header extends Component {
         );
     }
     render(){
-        let logout = null;
-        if (this.props.is_loggedin) {
-            logout = this.renderButton(
-                (()=> this.props.logout(this.context.settings, this.props.user)),
-                classNames('chattigo-top-bar-btn', 'chattigo-logout'),
-                'log-out');
-        }
         return (
             <div>
                 {this.context.settings.header_text}
@@ -37,49 +30,23 @@ class Header extends Component {
                     this.props.toggle,
                     classNames('chattigo-top-bar-btn', 'chattigo-toggle-collapse'),
                     'chevron-down')}
-                {logout}
             </div>
         );
     }
 }
 Header.contextTypes = { settings: React.PropTypes.object };
 
-const mapStateToProps = (state) => {
-    return {
-        is_loggedin: state.session.is_loggedin,
-        user: (settings) => ({
-            id: state.session.user,
-            name: state.session[lowerCase(settings.name_field)]
-        })
-    }
-}
+
 
 const mapDispatchToProps = (dispatch) => {
     return {
         toggle: () => {
             dispatch(toggle());
-        },
-        logout: (settings, user) => {
-            const message = {
-                id: v4(),
-                author: user(settings),
-                logout: true,
-                timestamp: moment().valueOf(),
-                origin: "customer",
-                type: "text",
-                content: Strings.CLIENT_LOGGED_OUT
-            };
-            settings.api.send(message).then((response) => {
-                settings.provider.stop();
-                dispatch(logout());
-            }).catch((response) => {
-                // console.error('Login:', response);
-            });
         }
     };
 };
 
-Header = connect(mapStateToProps,mapDispatchToProps)(Header);
+Header = connect(null,mapDispatchToProps)(Header);
 
 export default class WebChat extends Component {
     render() {
