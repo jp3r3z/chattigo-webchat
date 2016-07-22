@@ -8,7 +8,7 @@
 Webchat client for chattigo support service.
 
 ## Installation
-You can download Chattigo's webchat client from our CDN (not live yet), like this:
+You can download Chattigo's webchat client from our CDN, like this:
 
 ```html
 <!DOCTYPE html>
@@ -31,6 +31,7 @@ You can download Chattigo's webchat client from our CDN (not live yet), like thi
 </body>
 </html>
 ```
+
 It is also available via npm, as a CommonJS package:
 
 
@@ -47,10 +48,11 @@ var Chattigo = require('chattigo-webchat');
 ```js
 // ES6
 import Chattigo from 'chattigo-webchat';
+
 ``` 
 
 And then, in your html or in a javascript file, just do:
-1
+
 
 ```js
 // ES5
@@ -69,6 +71,31 @@ chattigo.init();
 Alternatively, you can clone this project, and use webpack to generate the
 necessary files in the dist folder, and include them in your project.
 
+### Bootstrap considerations
+
+Since `chattigo-webchat` uses bootstrap components, it comes with `bootstrap.js` library
+prepackaged. In case you are using bootstrap on your website, please use the following code
+to conditionally include `bootstrap.js` only in case chattigo doesn't load.
+
+
+```js
+<script type="text/javascript" src="http://driverwebchat1600.cloudapp.net/chattigo-webchat.js"></script>
+<script type="text/javascript">
+    if (typeof(Chattigo) === 'function') {
+        console.log("Chattigo loaded... Nothing done");
+    } else {
+        var bootstrap_cdn = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js';
+        console.log("Chattigo couldn't load... Loading bootstrap from CDN");
+        var bootstrap_script = document.createElement('script');
+        bootstrap_script.setAttribute('src', bootstrap_cdn);
+        document.head.appendChild(bootstrap_script);
+        console.log("Bootstrap loaded!");
+    }
+</script>
+```
+
+Make sure to include this snippet after you unclude `jquery`, so bootstrap can load correctly. Also, make
+sure to replace the value of the variable `bootstrap_cdn` with the proper url of your bootstrap distribution.
 
 
 ## Usage
@@ -96,7 +123,7 @@ necessary files in the dist folder, and include them in your project.
 </html>
 ```
 
-## Settings
+### Settings
 
 There is a second optional parameter to `Chattigo` constructor, the `settings`
 object, and its usage is as follows:
