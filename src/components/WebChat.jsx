@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Panel, Button, Glyphicon } from 'react-bootstrap';
 import { lowerCase } from 'lodash/string';
 import { Visibility, Strings } from '../constants';
-import { toggle, logout, clear_chat } from '../actions';
+import { toggle, logout } from '../actions';
 import Chat from './Chat';
 
 class Header extends Component {
@@ -71,7 +71,6 @@ const mapDispatchToProps = (dispatch) => {
             };
             settings.api.send(message).then((response) => {
                 settings.provider.stop();
-                dispatch(clear_chat());
                 dispatch(logout());
             }).catch((response) => {
                 // console.error('Login:', response);
