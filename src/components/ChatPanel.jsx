@@ -132,6 +132,7 @@ class DisconnectedLogout extends Component {
                 }}
                 >
                 <Glyphicon glyph={"log-out"} />
+                {' '}
                 {Strings.LOGOUT}
             </Button>
             );
