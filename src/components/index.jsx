@@ -16,7 +16,7 @@ class ToggleButton extends Component {
             if (validator.isURL(settings.toggle_button_image)) {
                 image = <Image src={settings.toggle_button_image} responsive />;
             }
-            if (_.startsWith('glyphicon', settings.toggle_button_image)) {
+            if (startsWith('glyphicon', settings.toggle_button_image)) {
                 image = <Glyphicon glyph={settings.toggle_button_image.slice(9)} bsSize={"small"}/>;
             }
         }
