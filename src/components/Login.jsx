@@ -14,18 +14,14 @@ import {
 import { Strings } from '../constants';
 import { kebabCase, lowerCase } from 'lodash/string';
 import { login } from '../actions';
+import DynForm from './DynForm';
 
 
 class LoginForm extends Component {
     grabData (e) {
         e.preventDefault();
-        let data = {};
-        const fields = this.context.settings.login_fields
-        fields.map(field => {
-            let prop = {}
-            prop[kebabCase(field)] = findDOMNode(this.refs[kebabCase(field)]).value;
-            data = Object.assign(data, prop);
-        });
+        console.log('LoginForm', 'grabData');
+        let data = this.refs.form.getValue();
         if (this.props.session.user)
             data = Object.assign(data, { user: this.props.session.user });
         else
@@ -37,21 +33,13 @@ class LoginForm extends Component {
         return (
             <Panel>
                 <p>{this.context.settings.welcome_text}</p>
-                <form>
-                    {this.context.settings.login_fields.map(field => {
-                        return (
-                            <FormGroup key={"chattigo-login-"+kebabCase(field)} controlId={"chattigo-login-"+kebabCase(field)}>
-                                <FormControl defaultValue={this.props.session[kebabCase(field)]} type="text" ref={kebabCase(field)} placeholder={field} />
-                            </FormGroup>
-                            );
-                    })}
-                    <Button
-                        type="submit"
-                        onClick={(e) => this.grabData(e)}
-                        >
-                        {this.context.settings.login_text}
-                    </Button>
-                </form>
+                <DynForm
+                    fields={this.context.settings.login_fields}
+                    onSubmit={(e) => this.grabData(e)}
+                    defaults={this.props.session}
+                    ref='form'
+                    submit_text={this.context.settings.login_text}
+                    />
             </Panel>
         );
     }
