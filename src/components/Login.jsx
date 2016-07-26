@@ -20,7 +20,6 @@ import DynForm from './DynForm';
 class LoginForm extends Component {
     grabData (e) {
         e.preventDefault();
-        console.log('LoginForm', 'grabData');
         let data = this.refs.form.getValue();
         if (this.props.session.user)
             data = Object.assign(data, { user: this.props.session.user });

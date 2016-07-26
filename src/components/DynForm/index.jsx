@@ -19,22 +19,27 @@ class DynForm extends Component {
 
     clickHandler (e) {
         e.preventDefault();
-        console.log('DynForm', 'clickHandler()');
         this.props.onSubmit(e);
     }
 
     render() {
+        const style = {
+            height: this.context.settings.height * 0.45,
+            marginBottom: this.context.settings.height * 0.45 * 0.05
+        };
         return (
             <form>
+                <div id='chattigo-form-fields' style={style}>
                 {this.props.fields.map(field => {
-                    let key = field
+                    let key = field;
                     if (typeof key === 'object') {
-                        key = field.label
+                        key = field.label;
                     }
                     const value = this.props.defaults[kebabCase(key)];
                     const default_value = value === 'undefined' ? '' : value;
                     return <Field key={key} ref={key} field={field} default={default_value}/>;
                 })}
+                </div>
                 <Button
                     type="submit"
                     onClick={(e) => this.clickHandler(e)}
@@ -45,4 +50,5 @@ class DynForm extends Component {
             );
     }
 }
+DynForm.contextTypes = { settings: React.PropTypes.object };
 export default DynForm;

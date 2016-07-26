@@ -31,6 +31,12 @@ export const WebAPI = {
     }
 };
 
+export const FormFields = {
+    defaults: {
+        type: 'string'
+    }
+};
+
 export const Strings = {
     SEND: "Enviar",
     PLACEHOLDER_MESSAGE: "Introduzca su mensaje...",
