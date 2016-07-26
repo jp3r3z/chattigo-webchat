@@ -175,12 +175,14 @@ const SETTINGS = {
 };
 ```
 
+### Options
+
 | Setting | Description | Type | Default Value |
-|:-------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
+|:-------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
 | `header_text` | Text displayed in the chat widget's upper bar | string | `"Web Chat"` |
 | `message_placeholder` | Placeholder for the send message box | string | `"Introduzca su mensaje..."` |
 | `send_text` | Text displayed in the send button | string | `"Enviar"` |
-| `form_fields` | List of fields required by Chattigo's customer in order to start a chat session. This data will be sent as a chat message, in JSON format, where every key corresponds to a [kebab-cased](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles) form of the field name. This will be improved in future releases. No client-side validation is provided. | list of strings | `["Nombre", "Email", "RUT"]` |
+| `login_fields` | List of fields required by Chattigo's customer in order to start a chat session. This data will be sent as a chat message, in JSON format, where every key corresponds to a [kebab-cased](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles) form of the field name. This will be improved in future releases. No client-side validation is provided. Refer to [Login Form Fields](https://github.com/throoze/chattigo-webchat#login-form-fields) section for advanced usage. | list of strings | `["Nombre", "Email", "RUT"]` |
 | `toggle_background_color` | CSS `background-color` for the webchat button in the collapsed state | string | `"#0853CB"` |
 | `toggle_color` | CSS `color` property for the webchat button in the collapsed state | string | `"#FFFFFF"` |
 | `welcome_text` | Welcome message displayed in the login form | string | `"Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión."` |
@@ -194,6 +196,39 @@ const SETTINGS = {
 | `name_field` | Name of the field defined in `form_fields` which is going to be used as the user display name. Note that if you customize `form_fields`, you have to customize this setting too, and they need to be consistent. | string | `'Nombre'` |
 
 Expect more customization in future releases.
+
+### Login Form Fields
+
+You can specify how you want chattigo webchat client to render your login form
+fields,using the option `login_fields`. Up to now, you can specify string
+fields whether they are rendered as a text input or as a select input. Fields
+are of `string` type by default. Expect more field types in future releases.
+
+#### String Fields
+
+You can specify a `string` field in the `login_fields` option in several ways:
+
+  * By specifying its label as a string:
+
+        login_fields: ["Nombre", "Email", "RUT"]
+
+  * By specifying a `label` and/or a `type` key:
+
+        login_fields: [{label: 'Nombre', type: 'string'}, 'Email', { label: 'RUT' }]
+
+  * By specifying a `choices` key:
+
+        login_fields: [{label: 'Nombre', type: 'string'}, 'Email', { label: 'RUT' }, {
+          label: 'Carrera',
+          choices: [
+              'Ingeniería',
+              'Matemática',
+              'Biología'
+              /* ... */
+            ]
+          }]
+
+
 
 
 ## API Key
