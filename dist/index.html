@@ -13,7 +13,7 @@
   <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function() {
           // var chattigo = new Chattigo("a794d3faca63bc42a5ca9b9cf548380c463d");
-          var chattigo = new Chattigo("49fdc2ddc9a51c4380c859ac998631c7fd4a");
+          var chattigo = new Chattigo("49fdc2ddc9a51c4380c859ac998631c7fd4a", {login_fields: ["Nombre", "Email", "RUT", {label: "Carrera", choices: ['Ing de computacion', 'Arquitectura', 'Urbanismo', 'Biología']}]});
           chattigo.init();
       });
   </script>
