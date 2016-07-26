@@ -1,7 +1,6 @@
 import 'babel-polyfill';
 import React from 'react';
 import { Component } from 'react';
-import { kebabCase } from 'lodash/string';
 import { Button } from 'react-bootstrap';
 import Field from './Field';
 
@@ -35,7 +34,7 @@ class DynForm extends Component {
                     if (typeof key === 'object') {
                         key = field.label;
                     }
-                    const value = this.props.defaults[kebabCase(key)];
+                    const value = this.props.defaults[key];
                     const default_value = value === 'undefined' ? '' : value;
                     return <Field key={key} ref={key} field={field} default={default_value}/>;
                 })}

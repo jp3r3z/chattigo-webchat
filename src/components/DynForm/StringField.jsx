@@ -23,6 +23,7 @@ class StringField extends Component {
                 <FormGroup controlId={"chattigo-form-field-"+kebabCase(field.label)}>
                     <ControlLabel>{field.label}</ControlLabel>
                     <FormControl
+                        defaultValue={this.props.default}
                         componentClass="select"
                         placeholder={field.label}
                         ref={kebabCase(field.label)} >
