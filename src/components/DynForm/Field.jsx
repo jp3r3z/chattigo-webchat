@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import { Component } from 'react';
 import StringField from './StringField';
-import { FormFields } from '../../constants';
+import { FormFields, Strings } from '../../constants';
 
 class Field extends Component {
 
@@ -24,6 +24,21 @@ class Field extends Component {
     getName() {
         const field = this.cleanField();
         return this.refs[field.label].getName();
+    }
+
+    validate() {
+        const value = this.getValue();
+        const field = this.cleanField();
+        if (value === "" || value === null) {
+            if (field.required) {
+                throw new Error(Strings.EXCEPTION_FIELD_REQUIRED(this.getName()))
+            }
+        } else {
+            if ('validation' in field) {
+                field.validation(value);
+            }
+        }
+        return true;
     }
 
     render() {

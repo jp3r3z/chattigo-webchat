@@ -3,6 +3,7 @@ import React from 'react';
 import { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Field from './Field';
+import { Strings } from '../../constants';
 
 class DynForm extends Component {
 
@@ -16,9 +17,39 @@ class DynForm extends Component {
         return value;
     }
 
+    validate() {
+        let validationErrors = [];
+        for (let field in this.refs) {
+            try {
+                this.refs[field].validate();
+            } catch (validationError) {
+                if (validationError instanceof Error) {
+                    validationErrors.push(validationError.message);
+                } else if (typeof validationError === 'string') {
+                    validationErrors.push(validationError);
+                }
+            }
+        }
+        if (validationErrors.length == 0){
+            return true;
+        } else {
+            throw validationErrors;
+        }
+    }
+
     clickHandler (e) {
         e.preventDefault();
-        this.props.onSubmit(e);
+        try {
+            this.validate();
+            this.props.onSubmit(e);
+        } catch (validationError) {
+            let message = Strings.FORM_ERRORS + ":";
+            for (let error of validationError) {
+                message += "\n\n    *  " + error;
+            }
+            message += "\n";
+            alert(message);
+        }
     }
 
     render() {

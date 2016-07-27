@@ -43,13 +43,13 @@ In case you are using npm, you can also require/import chattigo as a CommonJS mo
 ```js
 // ES5
 var Chattigo = require('chattigo-webchat');
-``` 
+```
 
 ```js
 // ES6
 import Chattigo from 'chattigo-webchat';
 
-``` 
+```
 
 And then, in your html or in a javascript file, just do:
 
@@ -78,7 +78,7 @@ prepackaged. In case you are using bootstrap on your website, please use the fol
 to conditionally include `bootstrap.js` only in case chattigo doesn't load.
 
 
-```js
+```html
 <script type="text/javascript" src="http://driverwebchat1600.cloudapp.net/chattigo-webchat.js"></script>
 <script type="text/javascript">
     if (typeof(Chattigo) === 'function') {
@@ -178,11 +178,11 @@ const SETTINGS = {
 ### Options
 
 | Setting | Description | Type | Default Value |
-|:-------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
+|:-------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
 | `header_text` | Text displayed in the chat widget's upper bar | string | `"Web Chat"` |
 | `message_placeholder` | Placeholder for the send message box | string | `"Introduzca su mensaje..."` |
 | `send_text` | Text displayed in the send button | string | `"Enviar"` |
-| `login_fields` | List of fields required by Chattigo's customer in order to start a chat session. This data will be sent as a chat message, in JSON format, where every key corresponds to a [kebab-cased](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles) form of the field name. This will be improved in future releases. No client-side validation is provided. Refer to [Login Form Fields](https://github.com/throoze/chattigo-webchat#login-form-fields) section for advanced usage. | list of strings | `["Nombre", "Email", "RUT"]` |
+| `login_fields` | List of fields required by Chattigo's customer in order to start a chat session. This data will be sent as a chat message, in JSON format, where every key corresponds to a [kebab-cased](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles) form of the field name. This will be improved in future releases. Refer to [Login Form Fields](https://github.com/throoze/chattigo-webchat#login-form-fields) section for validation and advanced usage. | list of strings | `["Nombre", "Email", "RUT"]` |
 | `toggle_background_color` | CSS `background-color` for the webchat button in the collapsed state | string | `"#0853CB"` |
 | `toggle_color` | CSS `color` property for the webchat button in the collapsed state | string | `"#FFFFFF"` |
 | `welcome_text` | Welcome message displayed in the login form | string | `"Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión."` |
@@ -228,8 +228,46 @@ You can specify a `string` field in the `login_fields` option in several ways:
             ]
           }]
 
+#### Validation
 
+Chattigo's webchat client provides built in validation for required fields.
+Fields are not required by default, so, if you want some field to be required,
+just add `required: true` to its definition in `login_fields` option.
 
+Also, you can provide a validation function for each field by using the
+`validation` field. Such function must recieve a parameter corresponding to
+the value of the field to be validated, and must throw an exception with
+the desired message in case the value is invalid.
+
+For instance, let's say we want to validate that a certain field is a
+valid email. An example validation function could be:
+
+```js
+document.addEventListener("DOMContentLoaded", function() {
+    // var chattigo = new Chattigo("a794d3faca63bc42a5ca9b9cf548380c463d");
+    var chattigo = new Chattigo(
+      "<your_API_key>",
+      { login_fields: [
+          "Nombre",
+          {
+            label: "Email",
+            required: true,
+            validation: function(value) {
+              var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+              if (!re.test(value)) {
+                throw new Error("El valor de Email debe ser un correo electrónico válido");
+              }
+            }
+          },
+          {label:"RUT", required: true}
+        ]
+      }
+    );
+    chattigo.init();
+});
+```
+In this example, both `Email` and `RUT` fields are required, and email
+validation through regex test is provided for `Email` field.
 
 ## API Key
 
