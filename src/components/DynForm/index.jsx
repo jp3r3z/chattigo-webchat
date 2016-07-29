@@ -3,6 +3,7 @@ import React from 'react';
 import { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Field from './Field';
+import { lowerCase } from 'lodash/string';
 import { Strings } from '../../constants';
 
 class DynForm extends Component {
@@ -11,7 +12,7 @@ class DynForm extends Component {
         let value = {};
         for (let field in this.refs) {
             let new_value = {};
-            new_value[this.refs[field].getName()] = this.refs[field].getValue(); 
+            new_value[lowerCase(this.refs[field].getName())] = this.refs[field].getValue(); 
             value = Object.assign(value, new_value);
         }
         return value;

@@ -5,6 +5,7 @@ import { v4 } from 'node-uuid';
 import { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
+import { lowerCase } from 'lodash/string';
 import {
     Panel,
     Button,
@@ -111,7 +112,7 @@ const mapDispatchToProps = (dispatch) => {
                     login_form: data,
                     author: {
                         id: data.user,
-                        name: data[settings.name_field] || Strings.ANONYMOUS
+                        name: data[lowerCase(settings.name_field)] || Strings.ANONYMOUS
                     },
                     timestamp: moment().valueOf(),
                     origin: "customer",
