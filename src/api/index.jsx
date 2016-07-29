@@ -52,6 +52,29 @@ class API {
     }
 }
 
+export class ReverseGeocodingProvider {
+    
+    constructor(){
+        this.tag = 'ReverseGeocodingProvider';
+    }
+
+    get(lat, lon) {
+        return new Promise((resolve, reject) => {
+            request.get(`${WebAPI.Nominatim.ReverseGeocoding.URL}`)
+                .set('Accept', 'application/json')
+                .query({ format: 'json', lat: lat, lon: lon })
+                .end((error, response) => {
+                    if (error) {
+                        console.error(`${this.tag}.get: status: ${response.status} ${response.statusText}. ${response.text}`, response);
+                        reject(response);
+                    } else {
+                        resolve(response);
+                    }
+                });
+        })
+    }
+}
+
 export class MessageProvider {
     constructor(token, api=false, timespan=5000) {
         this.tag = 'MessageProvider';

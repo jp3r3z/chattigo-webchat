@@ -162,7 +162,7 @@ const mapLogoutDispatchToProps = (dispatch) => {
                 content: Strings.CLIENT_LOGGED_OUT
             };
             settings.api.send(message).then((response) => {
-                settings.provider.stop();
+                settings.providers.messages.stop();
                 dispatch(logout());
             }).catch((response) => {
                 // console.error('Login:', response);
