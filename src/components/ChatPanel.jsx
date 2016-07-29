@@ -71,12 +71,16 @@ class DisconnectedMessageForm extends Component {
         }
     }
     render() {
+        const textbox = (
+            <FormGroup controlId="formControlsTextarea">
+                <FormControl ref={"message"} componentClass="textarea" placeholder={Strings.PLACEHOLDER_MESSAGE} />
+            </FormGroup>
+            );
+
         return (
             <Form inline>
                 <div id={"chattigo-message-form"}>
-                    <FormGroup controlId="formControlsTextarea">
-                        <FormControl ref={"message"} componentClass="textarea" placeholder={Strings.PLACEHOLDER_MESSAGE} />
-                    </FormGroup>
+                    {textbox}
                     <Button
                         type="submit"
                         onClick={(e) => this.sendHandler(e)}

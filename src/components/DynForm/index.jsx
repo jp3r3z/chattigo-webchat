@@ -67,7 +67,7 @@ class DynForm extends Component {
                     if (typeof key === 'object') {
                         key = field.label;
                     }
-                    const value = this.props.defaults[key];
+                    const value = this.props.defaults[lowerCase(key)];
                     const default_value = value === 'undefined' ? '' : value;
                     return <Field key={key} ref={key} field={field} default={default_value}/>;
                 })}
