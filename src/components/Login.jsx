@@ -11,8 +11,8 @@ import {
     FormGroup,
     FormControl
     } from 'react-bootstrap';
+import ClientJS from 'clientjs';
 import { Strings } from '../constants';
-import { kebabCase, lowerCase } from 'lodash/string';
 import { login } from '../actions';
 import DynForm from './DynForm';
 
@@ -51,26 +51,79 @@ const mapStateToProps = (state) => {
     }
 };
 
+const getClientInfo = (provider) => {
+    return new Promise((resolve, reject) => {
+        /* GEOLOCATION */
+        const client = new ClientJS();
+        let geolocation = null;
+        if ("geolocation" in navigator) {
+            const getPosition = (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                provider.get(lat, lon).then((response) => {
+                    geolocation = response.body;
+                    resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                }).catch((response) => {
+                    geolocation = Strings.GEOLOCATION_REVERSE_GEOCODING_ERROR(response);
+                    resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                });
+            };
+            const positionError = (error) => {
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        geolocation = Strings.GEOLOCATION_PERMISSION_DENIED;
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        geolocation = Strings.GEOLOCATION_POSITION_UNAVAILABLE;
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        break;
+                    case error.TIMEOUT:
+                        geolocation = Strings.GEOLOCATION_TIMEOUT;
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        geolocation = Strings.GEOLOCATION_UNKNOWN_ERROR(error.message);
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        break;
+                    default:
+                        geolocation = Strings.GEOLOCATION_UNKNOWN_ERROR(error.message);
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        break;
+                }
+            };
+            navigator.geolocation.getCurrentPosition(getPosition, positionError);
+        } else {
+            geolocation = Strings.GEOLOCATION_NOT_AVAILABLE;
+            resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+        }
+    });
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         onLogin: (data, settings) => {
-            const message = {
-                id: v4(),
-                new_session: true,
-                author: {
-                    id: data.user,
-                    name: data[lowerCase(settings.name_field)] || Strings.ANONYMOUS
-                },
-                timestamp: moment().valueOf(),
-                origin: "customer",
-                type: "text",
-                content: JSON.stringify(data)
-            };
-            settings.api.send(message).then((response) => {
-                dispatch(login(settings.login_fields, data));
-                settings.provider.run(data, dispatch);
-            }).catch((response) => {
-                // console.error('Login:', response);
+            getClientInfo(settings.providers.reverseGeocoding).then((clientInfo) => {
+                const message = {
+                    id: v4(),
+                    new_session: true,
+                    client: clientInfo,
+                    login_form: data,
+                    author: {
+                        id: data.user,
+                        name: data[settings.name_field] || Strings.ANONYMOUS
+                    },
+                    timestamp: moment().valueOf(),
+                    origin: "customer",
+                    type: "text",
+                    content: JSON.stringify(data)
+                };
+                settings.api.send(message).then((response) => {
+                    dispatch(login(settings.login_fields, data));
+                    settings.providers.messages.run(data, dispatch);
+                }).catch((response) => {
+                    // console.error('Login:', response);
+                });
             });
         }
     };

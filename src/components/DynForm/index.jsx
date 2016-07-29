@@ -44,6 +44,7 @@ class DynForm extends Component {
             this.props.onSubmit(e);
         } catch (validationError) {
             let message = Strings.FORM_ERRORS + ":";
+            console.log(validationError)
             for (let error of validationError) {
                 message += "\n\n    *  " + error;
             }

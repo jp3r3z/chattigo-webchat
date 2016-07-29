@@ -28,6 +28,12 @@ export const WebAPI = {
                 URL: `${ROOT}/api/v1/chat`
             }
         }
+    },
+    Nominatim: {
+        ReverseGeocoding: {
+            method: "get",
+            URL: 'http://nominatim.openstreetmap.org/reverse'
+        }
     }
 };
 
@@ -45,6 +51,12 @@ export const Strings = {
     LOGIN: "Iniciar sesión",
     LOGOUT: "Terminar Chat",
     ANONYMOUS: "Anónimo",
+    GEOLOCATION_NOT_AVAILABLE: "El servicio de geolocalización no está disponible",
+    GEOLOCATION_PERMISSION_DENIED: "El usuario no dio permiso de recibir la geolocalización",
+    GEOLOCATION_POSITION_UNAVAILABLE: "La información de geolocalización no está disponible",
+    GEOLOCATION_TIMEOUT: "La petición para obtener la información de geolocalización alcanzó el límite de tiempo",
+    GEOLOCATION_UNKNOWN_ERROR: (error) => (`Se produjo un error desconocido al solicitar información de geolocalización: ${error}`),
+    GEOLOCATION_REVERSE_GEOCODING_ERROR: (error) => (`Se produjo un error al solicitar geocodificación reversa: ${error}`),
     WELCOME: "Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión.",
     EXCEPTION_NAME_FIELD_MISSING: "Si se definen campos personalizados de inicio de sesión, debe especificar en la configuración el campo a ser utilizado como nombre (name_field).",
     EXCEPTION_CHECK_CONFIG: "Por favor revise la configuración del widget de Chattigo.",
