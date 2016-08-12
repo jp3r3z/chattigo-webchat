@@ -9,6 +9,7 @@ import React from 'react';
 import { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import configureStore from './configureStore';
 import ChattigoWebChat from './components';
 import { MessageProvider, ReverseGeocodingProvider } from './api';
@@ -17,6 +18,7 @@ import { Strings, SETTINGS } from './constants';
 import { logout, toggle } from './actions';
 
 class SettingsProvider extends Component {
+
     getChildContext() {
         return { settings: this.props.settings };
     }
@@ -31,6 +33,7 @@ SettingsProvider.childContextTypes = {
 
 
 class ConfigurationException {
+
     constructor(cause, message=Strings.EXCEPTION_CHECK_CONFIG) {
         this.name = "ConfigurationException";
         this.cause = cause;
@@ -44,6 +47,7 @@ class ConfigurationException {
 
 
 class Chattigo {
+
     constructor (APIkey, settings = SETTINGS) {
         const key = { APIkey: APIkey };
         const api = { api: new API(APIkey) };
@@ -57,6 +61,7 @@ class Chattigo {
         this.store = configureStore();
         this.container = "chattigo-webchat-container";
     }
+
     init() {
         if (this.settings.login_fields !== []) {
             if ($.inArray(this.settings.name_field, this.settings.login_fields) == -1) {
@@ -70,6 +75,7 @@ class Chattigo {
         if (this.store.getState().visibility === "EXPANDED") {
             this.store.dispatch(toggle());
         }
+        injectTapEventPlugin();
         render(
             (
                 <Provider store={this.store}>
