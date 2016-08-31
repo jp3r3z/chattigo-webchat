@@ -9,38 +9,73 @@ class API {
         this.api_key = token;
     }
 
+    _send(resolve, reject, req, message) {
+        req.send({ token: this.api_key, message: message })
+            .end((error, response) => {
+                if (error) {
+                    if (error.status == 401) {
+                        console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
+                        alert(Strings.AUTH_EXCEPTION_USER_MSG);
+                    }
+                    console.error(`API.send: status: ${response.status} ${response.statusText}. ${response.text}`, response);
+                    reject(response);
+                } else {
+                    resolve({response: response, message: message});
+                }
+            });
+    }
+
     send(message) {
         return new Promise((resolve, reject) => {
             const req = request.post(`${WebAPI.v1.ENDPOINTS.SEND_MESSAGE.URL}`)
                 .set('Authorization', `Token token=${this.api_key}`)
                 .set('Accept', 'application/json');
             if (message.files) {
-                const formData = new FormData();
-                for (let key in message.files) {
-                    if (message.files.hasOwnProperty(key) && message.files[key] instanceof File) {
-                        formData.append(`files[${key}]`, message.files[key]);
-                    }
-                }
-                delete message.files
-                req.send(formData)
-            }
-            req.send({ token: this.api_key, message: message })
-                .on('progress', (e) => {
-                    console.log('uploading file... ', e.percent, '%');
-                })
-                .end((error, response) => {
-                    if (error) {
-                        if (error.status == 401) {
-                            console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
-                            alert(Strings.AUTH_EXCEPTION_USER_MSG);
-                        }
-                        console.error(`API.send: status: ${response.status} ${response.statusText}. ${response.text}`, response);
-                        reject(response);
-                    } else {
-                        resolve(response);
-                    }
+                this.send_files(message).then( (response) => {
+                    delete message.files;
+                    const new_message = Object.assign({}, message, { attachments: response.attachments });
+                    this._send(resolve, reject, req, new_message);
+                }).catch((error) => {
+                    console.error("Problem sending file:", error);
+                    reject(error);
                 });
-        })
+            } else {
+                this._send(resolve, reject, req, message);
+            }
+        });
+    }
+
+    send_files(message) {
+        return new Promise((resolve, reject) => {
+            let attachments = [];
+            for (let file of message.files) {
+                const req = request.post(`${WebAPI.v1.ENDPOINTS.SEND_FILE.URL}`)
+                    .set('Authorization', `Token token=${this.api_key}`)
+                    .set('Accept', 'application/json')
+                    .on('progress', (e) => {
+                        console.log('uploading file ', file.name,'... ', e.percent, '%');
+                    });
+                const formData = new FormData();
+                formData.append(`token`, this.api_key);
+                formData.append(`author_id`, message.author.id);
+                formData.append(`author_name`, message.author.name);
+                formData.append(`file`, file);
+                req.send(formData)
+                    .end((error, response) => {
+                        if (error) {
+                            if (error.status == 401) {
+                                console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
+                                alert(Strings.AUTH_EXCEPTION_USER_MSG);
+                            }
+                            console.error(`API.send: status: ${response.status} ${response.statusText}. ${response.text}`, response);
+                            reject(response);
+                        } else {
+                            attachments.push(response.body);
+                        }
+                    });
+            }
+            resolve({attachments: attachments});
+        });
     }
 
     request(user) {

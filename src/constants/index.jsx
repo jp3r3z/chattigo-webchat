@@ -26,6 +26,10 @@ export const WebAPI = {
             REQUEST_MESSAGES: {
                 method: "get",
                 URL: `${ROOT}/api/v1/chat`
+            },
+            SEND_FILE: {
+                method: "post",
+                URL: `${ROOT}/api/v1/chat/file`
             }
         }
     },

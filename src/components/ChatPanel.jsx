@@ -176,7 +176,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onAddMessage: (message, settings) => {
             settings.api.send(message).then((response) => {
-                dispatch(add_message(message));
+                console.log("ChatPanel: mapDispatchToProps: response:", response);
+                dispatch(add_message(response.message));
             }).catch((response) => {
                 // console.error('Send message:', response);
             });

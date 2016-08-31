@@ -18,6 +18,16 @@ export default class Message extends Component {
                         </div>
                     </div>
                     <div className={classNames("chattigo-message-content", "chattigo-message-"+kebabCase(message.type)+"-content")}>
+                        {(() => {
+                                if (message.attachments) {
+                                    return <div className={"chattigo-message-attachments"}>
+                                                {message.attachments.map((attachment) => {
+                                                    return <img key={attachment.name} src={attachment.url.thumbnail} alt={attachment.name}/>;
+                                                })}
+                                           </div>;
+                                }
+                            })()
+                        }
                         {message.content}
                     </div>
                 </div>
