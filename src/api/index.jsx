@@ -8,28 +8,76 @@ class API {
     constructor(token) {
         this.api_key = token;
     }
-    
+
+    _send(resolve, reject, req, message) {
+        req.send({ token: this.api_key, message: message })
+            .end((error, response) => {
+                if (error) {
+                    if (error.status == 401) {
+                        console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
+                        alert(Strings.AUTH_EXCEPTION_USER_MSG);
+                    }
+                    console.error(`API.send: status: ${response.status} ${response.statusText}. ${response.text}`, response);
+                    reject(response);
+                } else {
+                    resolve({response: response, message: message});
+                }
+            });
+    }
+
     send(message) {
         return new Promise((resolve, reject) => {
-            request.post(`${WebAPI.v1.ENDPOINTS.SEND_MESSAGE.URL}`)
+            const req = request.post(`${WebAPI.v1.ENDPOINTS.SEND_MESSAGE.URL}`)
                 .set('Authorization', `Token token=${this.api_key}`)
-                .set('Accept', 'application/json')
-                .send({ message: message, token: this.api_key })
-                .end((error, response) => {
-                    if (error) {
-                        if (error.status == 401) {
-                            console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
-                            alert(Strings.AUTH_EXCEPTION_USER_MSG);
-                        }
-                        console.error(`API.send: status: ${response.status} ${response.statusText}. ${response.text}`, response);
-                        reject(response);
-                    } else {
-                        resolve(response);
-                    }
+                .set('Accept', 'application/json');
+            if (message.files) {
+                this.send_files(message).then( (response) => {
+                    delete message.files;
+                    const new_message = Object.assign({}, message, { attachments: response.attachments });
+                    this._send(resolve, reject, req, new_message);
+                }).catch((error) => {
+                    console.error("Problem sending file:", error);
+                    reject(error);
                 });
-        })
+            } else {
+                this._send(resolve, reject, req, message);
+            }
+        });
     }
-    
+
+    send_files(message) {
+        return new Promise((resolve, reject) => {
+            let attachments = [];
+            for (let file of message.files) {
+                const req = request.post(`${WebAPI.v1.ENDPOINTS.SEND_FILE.URL}`)
+                    .set('Authorization', `Token token=${this.api_key}`)
+                    .set('Accept', 'application/json')
+                    .on('progress', (e) => {
+                        console.log('uploading file ', file.name,'... ', e.percent, '%');
+                    });
+                const formData = new FormData();
+                formData.append(`token`, this.api_key);
+                formData.append(`author_id`, message.author.id);
+                formData.append(`author_name`, message.author.name);
+                formData.append(`file`, file);
+                req.send(formData)
+                    .end((error, response) => {
+                        if (error) {
+                            if (error.status == 401) {
+                                console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
+                                alert(Strings.AUTH_EXCEPTION_USER_MSG);
+                            }
+                            console.error(`API.send: status: ${response.status} ${response.statusText}. ${response.text}`, response);
+                            reject(response);
+                        } else {
+                            attachments.push(response.body);
+                        }
+                    });
+            }
+            resolve({attachments: attachments});
+        });
+    }
+
     request(user) {
         return new Promise((resolve, reject) => {
             request.get(`${WebAPI.v1.ENDPOINTS.REQUEST_MESSAGES.URL}`)
@@ -53,7 +101,7 @@ class API {
 }
 
 export class ReverseGeocodingProvider {
-    
+
     constructor(){
         this.tag = 'ReverseGeocodingProvider';
     }
@@ -99,7 +147,7 @@ export class MessageProvider {
                     if (data.body !== []) {
                         for (let message of data.body) {
                             dispatch(add_message(message));
-                        } 
+                        }
                     }
                     this.run(user, dispatch);
                 }).catch((error) => {
@@ -114,6 +162,6 @@ export class MessageProvider {
     stop() {
         this.running = false;
     }
-} 
+}
 
 export default API;

@@ -18,7 +18,7 @@ class Header extends Component {
                 onClick={onClickFunc}
                 className={classname}
                 >
-                {' '}<Glyphicon glyph={icon} /> 
+                {' '}<Glyphicon glyph={icon} />
             </Button>
         );
     }
@@ -62,6 +62,9 @@ export default class WebChat extends Component {
                 }}
                 >
                 <Chat/>
+                <div className="chattigo-powered-by">
+                    <span>powered by</span><span className="chattigo-powered-by-chattigo"> Chattigo</span>
+                </div>
             </Panel>
         );
     }

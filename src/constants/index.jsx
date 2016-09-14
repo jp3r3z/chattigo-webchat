@@ -14,8 +14,8 @@ export const ActionTypes = keyMirror({
     CLEAR_CHAT: null
 });
 
-// const ROOT = "http://localhost:3000";
-const ROOT = "http://driverwebchat1600.cloudapp.net";
+const ROOT = "http://localhost:3000";
+// const ROOT = "http://driverwebchat1600.cloudapp.net";
 export const WebAPI = {
     v1: {
         ENDPOINTS: {
@@ -26,6 +26,10 @@ export const WebAPI = {
             REQUEST_MESSAGES: {
                 method: "get",
                 URL: `${ROOT}/api/v1/chat`
+            },
+            SEND_FILE: {
+                method: "post",
+                URL: `${ROOT}/api/v1/chat/file`
             }
         }
     },
@@ -46,7 +50,8 @@ export const FormFields = {
 
 export const Strings = {
     SEND: "Enviar",
-    PLACEHOLDER_MESSAGE: "Introduzca su mensaje...",
+    ATTACH_FILE: "Adjuntar un archivo",
+    PLACEHOLDER_MESSAGE: "Mensaje o archivo",
     HEADER_TEXT: "Web Chat",
     LOGIN: "Iniciar sesión",
     LOGOUT: "Terminar Chat",

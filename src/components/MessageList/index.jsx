@@ -11,17 +11,17 @@ class DisconnectedMessageList extends Component {
         this.selector = "#chattigo-message-list";
         $(this.selector).stop().animate({
             scrollTop: $(this.selector)[0].scrollHeight
-        }, 800);
+        }, 500);
     }
 
     componentDidUpdate(prevProps, prevState) {
         $(this.selector).stop().animate({
             scrollTop: $(this.selector)[0].scrollHeight
-        }, 800);
+        }, 500);
     }
 
     render(){
-        let styles = { height: this.context.settings.height * 0.58 };
+        let styles = { height: this.context.settings.height * 0.45 };
         const image = this.context.settings.message_list_background_image;
         if (image !== null) {
             if (image == false) {
@@ -38,6 +38,7 @@ class DisconnectedMessageList extends Component {
                 {this.props.messages.map(message => {
                     return <Message key={message.id} message={message}/>;
                 })}
+                <div id="chattigo-progress-bar"></div>
             </Panel>
             );
     }
@@ -53,4 +54,4 @@ const mapStateToProps = (state) => {
 
 const MessageList = connect(mapStateToProps)(DisconnectedMessageList);
 
-export default MessageList; 
+export default MessageList;

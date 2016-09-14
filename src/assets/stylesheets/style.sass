@@ -1,87 +1,115 @@
+@import 'fonts'
+@import 'file-icons'
+@import 'colors'
+
+
 #chattigo-webchat-container
-    z-index: 10
-    position: fixed
-    overflow: visible
     bottom: 10px
+    overflow: visible
+    position: fixed
     right: 10px
+    z-index: 10
+
     #chattigo-widget
-        position: fixed
         bottom: 10px
+        position: fixed
         right: 10px
+
         &.collapsed
-            width: 50px
-            height: 50px
+            border: 0
             border-radius: 50px
             font-size: 2em
             font-weight: bold
+            height: 50px
             text-align: center
             vertical-align: middle
-            border: none
+            width: 50px
+
         &.expanded
-            width: 500px
             height: 500px
+            width: 500px
+
+        .chattigo-powered-by
+            font-size: .6em
+
+            .chattigo-powered-by-chattigo
+                font-family: 'Comfortaa'
+
         .chattigo-top-bar-btn
-            position: relative
             float: right
+            position: relative
             top: -5px
+
         .chattigo-toggle-collapse
             right: -15px
+
         .chattigo-logout
             right: -20px
+
         #chattigo-form-fields
+            border: solid 1px $border-color
+            border-radius: 5px
             overflow-y: auto
-            border: solid 1px #ddd
-            border-radius: 5px; 
+
         #chattigo-message-form
             position: relative
-            #formControlsTextarea
-                width: 100%
-            div
-                width: 70%
-                margin-right: 1%
-            button
-                margin-left: 1%
-                width: 28%
+
+            #chattigo-dropfilefield
+                float: left
+
+            .chattigo-icon-button
+                float: right
+
+            .chattigo-file-preview
+                width: 30% !important
+
         #chattigo-logout
-            width: 100%
             margin: 3px auto
             text-align: center
+            width: 100%
+
         #chattigo-message-list
-            overflow-y: auto
-            background-size: 20%
             background-image: url('../images/chattigo_background_overlay.png')
-            .mCSB_inside > .mCSB_container
-                margin-right: 10px;
+            background-size: 20%
+            overflow-y: auto
+
             .chattigo-message-container
-                overflow: hidden
                 margin: 5% 0
+                overflow: hidden
+
                 .chattigo-message
-                    width: 100%
                     border-radius: 5px
+                    width: 100%
+
                     &.chattigo-message-from-agent
-                        background-color: #FFFFFF
+                        background-color: $agent-message-background
                         float: left
+
                     &.chattigo-message-from-customer
-                        background-color: #DCF8C6
+                        background-color: $customer-message-background
                         float: right
+
                     .chattigo-message-header
-                        font-size: 0.8em
+                        font-size: .8em
                         margin: 0
                         overflow: hidden
+
                         .chattigo-message-author
-                            width: 50%
-                            margin: 2% 0 0 4%
+                            color: $mesasge-author
                             float: left
-                            text-align: left
                             font-weight: bold
-                            color: #000000
+                            margin: 2% 0 0 4%
+                            text-align: left
+                            width: 50%
+
                         .chattigo-message-timestamp
-                            font-size: 0.75em
-                            width: 40%;
-                            margin: 2% 4% 0 0
+                            color: $message-timestamp
                             float: right
+                            font-size: .75em
+                            margin: 2% 4% 0 0
                             text-align: right
-                            color: #CBC9C9
+                            width: 40%
+
                     .chattigo-message-content
                         display: block
                         margin: 5%
