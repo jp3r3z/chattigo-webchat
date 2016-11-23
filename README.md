@@ -20,7 +20,7 @@ You can download Chattigo's webchat client from our CDN, like this:
 <body>
   <div id="app">
       <h1>Your web site.</h1>
-      <div><p> whatever...</p></div> 
+      <div><p> whatever...</p></div>
   </div>
   <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function() {
@@ -111,7 +111,7 @@ sure to replace the value of the variable `bootstrap_cdn` with the proper url of
 <body>
   <div id="app">
       <h1>Your web site.</h1>
-      <div><p> whatever...</p></div> 
+      <div><p> whatever...</p></div>
   </div>
   <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function() {
@@ -244,7 +244,6 @@ valid email. An example validation function could be:
 
 ```js
 document.addEventListener("DOMContentLoaded", function() {
-    // var chattigo = new Chattigo("a794d3faca63bc42a5ca9b9cf548380c463d");
     var chattigo = new Chattigo(
       "<your_API_key>",
       { login_fields: [
