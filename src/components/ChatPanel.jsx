@@ -142,16 +142,19 @@ class DisconnectedMessageForm extends Component {
                     maxFileCount={3} />
             </div>
             );
+        const attach = (
+            <IconButton
+                className="chattigo-icon-button"
+                tooltip={Strings.ATTACH_FILE}
+                onClick={(e) => this.toggleFileInput(e)} >
+                <FontIcon className="material-icons">attach_file</FontIcon>
+            </IconButton>
+        );
         return (
             <Form inline>
                 <div id={"chattigo-message-form"}>
                     {dropzone}
-                    <IconButton
-                        className="chattigo-icon-button"
-                        tooltip={Strings.ATTACH_FILE}
-                        onClick={(e) => this.toggleFileInput(e)} >
-                        <FontIcon className="material-icons">attach_file</FontIcon>
-                    </IconButton>
+                    {/*attach*/}
                     <IconButton
                         className="chattigo-icon-button"
                         tooltip={Strings.SEND}

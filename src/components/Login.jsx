@@ -31,16 +31,13 @@ class LoginForm extends Component {
 
     render(){
         return (
-            <Panel>
-                <p>{this.context.settings.welcome_text}</p>
-                <DynForm
-                    fields={this.context.settings.login_fields}
-                    onSubmit={(e) => this.grabData(e)}
-                    defaults={this.props.session}
-                    ref='form'
-                    submit_text={this.context.settings.login_text}
-                    />
-            </Panel>
+            <DynForm
+                fields={this.context.settings.login_fields}
+                onSubmit={(e) => this.grabData(e)}
+                defaults={this.props.session}
+                ref='form'
+                submit_text={this.context.settings.login_text}
+                />
         );
     }
 }

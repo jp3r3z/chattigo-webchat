@@ -51,7 +51,8 @@ export const FormFields = {
 export const Strings = {
     SEND: "Enviar",
     ATTACH_FILE: "Adjuntar un archivo",
-    PLACEHOLDER_MESSAGE: "Mensaje o archivo",
+    // PLACEHOLDER_MESSAGE: "Mensaje o archivo",
+    PLACEHOLDER_MESSAGE: "Mensaje",
     HEADER_TEXT: "Web Chat",
     LOGIN: "Iniciar sesión",
     LOGOUT: "Terminar Chat",

@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Panel } from 'react-bootstrap';
 import Field from './Field';
 import { lowerCase } from 'lodash/string';
 import { Strings } from '../../constants';
@@ -12,7 +12,7 @@ class DynForm extends Component {
         let value = {};
         for (let field in this.refs) {
             let new_value = {};
-            new_value[lowerCase(this.refs[field].getName())] = this.refs[field].getValue(); 
+            new_value[lowerCase(this.refs[field].getName())] = this.refs[field].getValue();
             value = Object.assign(value, new_value);
         }
         return value;
@@ -56,29 +56,32 @@ class DynForm extends Component {
 
     render() {
         const style = {
-            height: this.context.settings.height * 0.45,
             marginBottom: this.context.settings.height * 0.45 * 0.05
         };
         return (
-            <form>
-                <div id='chattigo-form-fields' style={style}>
-                {this.props.fields.map(field => {
-                    let key = field;
-                    if (typeof key === 'object') {
-                        key = field.label;
-                    }
-                    const value = this.props.defaults[lowerCase(key)];
-                    const default_value = value === 'undefined' ? '' : value;
-                    return <Field key={key} ref={key} field={field} default={default_value}/>;
-                })}
-                </div>
-                <Button
-                    type="submit"
-                    onClick={(e) => this.clickHandler(e)}
-                    >
-                    {this.props.submit_text}
-                </Button>
-            </form>
+            <Panel id="chattigo-login-form-panel">
+                <p>{this.context.settings.welcome_text}</p>
+                <form>
+                    <div id='chattigo-form-fields' style={style}>
+                        {this.props.fields.map(field => {
+                            let key = field;
+                            if (typeof key === 'object') {
+                                key = field.label;
+                            }
+                            const value = this.props.defaults[lowerCase(key)];
+                            const default_value = value === 'undefined' ? '' : value;
+                            return <Field key={key} ref={key} field={field} default={default_value}/>;
+                        })}
+                    </div>
+                    <Button
+                        type="submit"
+                        onClick={(e) => this.clickHandler(e)}
+                        >
+                        {this.props.submit_text}
+                    </Button>
+                </form>
+            </Panel>
+
             );
     }
 }

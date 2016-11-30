@@ -71,10 +71,6 @@ class Chattigo {
         let chattigo = document.createElement("DIV");
         chattigo.id = this.container;
         document.getElementsByTagName('body')[0].appendChild(chattigo);
-        this.store.dispatch(logout());
-        if (this.store.getState().visibility === "EXPANDED") {
-            this.store.dispatch(toggle());
-        }
         injectTapEventPlugin();
         render(
             (
