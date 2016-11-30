@@ -14,8 +14,10 @@ export const ActionTypes = keyMirror({
     CLEAR_CHAT: null
 });
 
-const ROOT = "http://localhost:3000";
-// const ROOT = "http://driverwebchat1600.cloudapp.net";
+const ROOT = process.env.NODE_ENV === "production" ?
+                "http://driverwebchat1600.cloudapp.net" :
+                "http://localhost:3000";
+
 export const WebAPI = {
     v1: {
         ENDPOINTS: {
