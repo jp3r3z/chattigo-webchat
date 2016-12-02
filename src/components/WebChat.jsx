@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import moment from 'moment';
-import { v4 } from 'node-uuid';
+import { v4 } from 'uuid';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Panel, Button, Glyphicon } from 'react-bootstrap';

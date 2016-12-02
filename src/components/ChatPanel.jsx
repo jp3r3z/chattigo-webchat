@@ -5,7 +5,7 @@ import $ from 'jquery';
 import moment from 'moment';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { v4 } from 'node-uuid';
+import { v4 } from 'uuid';
 import { lowerCase } from 'lodash/string';
 import {
     Panel,

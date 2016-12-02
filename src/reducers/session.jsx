@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import { ActionTypes } from '../constants';
-import { v4 } from 'node-uuid';
+import { v4 } from 'uuid';
 
 const session = ( state = { is_loggedin: false }, action) => {
     switch (action.type) {

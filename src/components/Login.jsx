@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import moment from 'moment';
-import { v4 } from 'node-uuid';
+import { v4 } from 'uuid';
 import { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
