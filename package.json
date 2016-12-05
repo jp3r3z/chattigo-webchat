@@ -1,6 +1,6 @@
 {
   "name": "chattigo-webchat",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Web chat client for Chattigo support service.",
   "main": "src/index.js",
   "scripts": {
