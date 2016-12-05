@@ -84,6 +84,7 @@ export const SETTINGS = {
     message_placeholder: Strings.PLACEHOLDER_MESSAGE,
     login_fields: ["Nombre", "Email", "RUT"],
     toggle_background_color: "#0853CB",
+    toggle_button: null,
     toggle_color: "#FFFFFF",
     send_background_color: "#0853CB",
     send_color: "#FFFFFF",

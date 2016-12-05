@@ -9,6 +9,18 @@ import { toggle } from '../actions';
 import WebChat from './WebChat'
 
 class ToggleButton extends Component {
+
+    stripScripts(s) {
+        var div = document.createElement('div');
+        div.innerHTML = s;
+        var scripts = div.getElementsByTagName('script');
+        var i = scripts.length;
+        while (i--) {
+          scripts[i].parentNode.removeChild(scripts[i]);
+        }
+        return div.innerHTML;
+    }
+
     render() {
         const settings  = this.context.settings;
         let image = <Image src={require("../assets/images/chattigo-icon.png")} responsive />;
@@ -20,9 +32,9 @@ class ToggleButton extends Component {
                 image = <Glyphicon glyph={settings.toggle_button_image.slice(9)} bsSize={"small"}/>;
             }
         }
-        return (
+        const button = this.context.settings.toggle_button === null || this.context.settings.toggle_button === undefined ? (
             <Button
-                className={Visibility.COLLAPSED.toLowerCase()}
+                className={Visibility.COLLAPSED.toLowerCase()+" not-custom"}
                 onClick={() => this.props.onToggleClick()}
                 bsSize={"small"}
                 id={"chattigo-widget"}
@@ -32,9 +44,18 @@ class ToggleButton extends Component {
                         backgroundColor: this.context.settings.toggle_background_color
                     }}
                 >
-                {image}
+                    {image}
             </Button>
+        ) : (
+            <div
+                className={Visibility.COLLAPSED.toLowerCase()+" custom"}
+                onClick={() => this.props.onToggleClick()}
+                id={"chattigo-widget"}
+                dangerouslySetInnerHTML={{__html: this.stripScripts(this.context.settings.toggle_button)}}
+                />
         );
+
+        return button;
     }
 }
 ToggleButton.contextTypes = { settings: React.PropTypes.object };
