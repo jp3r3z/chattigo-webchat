@@ -38,7 +38,8 @@ It is also available via npm, as a CommonJS package:
     $ npm install --save chattigo-webchat
 
 
-In case you are using npm, you can also require/import chattigo as a CommonJS module:
+In case you are using npm, you can also require/import chattigo as a CommonJS
+module:
 
 ```js
 // ES5
@@ -94,8 +95,9 @@ to conditionally include `bootstrap.js` only in case chattigo doesn't load.
 </script>
 ```
 
-Make sure to include this snippet after you unclude `jquery`, so bootstrap can load correctly. Also, make
-sure to replace the value of the variable `bootstrap_cdn` with the proper url of your bootstrap distribution.
+Make sure to include this snippet after you include `jquery`, so bootstrap can
+load correctly. Also, make sure to replace the value of the variable
+`bootstrap_cdn` with the proper url of your bootstrap distribution.
 
 
 ## Usage
@@ -171,7 +173,8 @@ const SETTINGS = {
     height: 400,
     locale: "es",
     toggle_button_image: null,
-    name_field: "Nombre"
+    name_field: "Nombre",
+    toggle_button: null
 };
 ```
 
@@ -186,7 +189,7 @@ const SETTINGS = {
 | `toggle_background_color` | CSS `background-color` for the webchat button in the collapsed state | string | `"#0853CB"` |
 | `toggle_color` | CSS `color` property for the webchat button in the collapsed state | string | `"#FFFFFF"` |
 | `welcome_text` | Welcome message displayed in the login form | string | `"Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión."` |
-| `width` | Number of pixels of the expanded widget's with | int | `300` |
+| `width` | Number of pixels of the expanded widget's width | int | `300` |
 | `height` | Number of pixels of the expanded widget's height | int | `400` |
 | `send_background_color` | Send message button css `background-color` property | string | `"#0853CB"` |
 | `send_color` | Send message css `color` property | string | `"#FFFFFF"` |
@@ -229,6 +232,7 @@ You can specify a `string` field in the `login_fields` option in several ways:
             ]
           }]
 
+
 #### Validation
 
 Chattigo's webchat client provides built in validation for required fields.
@@ -236,7 +240,7 @@ Fields are not required by default, so, if you want some field to be required,
 just add `required: true` to its definition in `login_fields` option.
 
 Also, you can provide a validation function for each field by using the
-`validation` field. Such function must recieve a parameter corresponding to
+`validation` field. Such function must receive a parameter corresponding to
 the value of the field to be validated, and must throw an exception with
 the desired message in case the value is invalid.
 
@@ -272,7 +276,7 @@ validation through regex test is provided for `Email` field.
 ## API Key
 
 In order to get an API key you need to get in touch with chattigo executives.
-Visit [our website](http://www.chattigo.com) or contact our executives through
+Visit [our website](http://www.chattigo.im) or contact our executives through
 contacto@chattigo.com.
 
 
