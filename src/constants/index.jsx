@@ -78,6 +78,9 @@ export const Strings = {
 export const SETTINGS = {
     customer_classname: "customer",
     header_text: Strings.HEADER_TEXT,
+    header_background_color: null,
+    header_color: null,
+    header_icon_color: null,
     send_text: Strings.SEND,
     login_text: Strings.LOGIN,
     welcome_text: Strings.WELCOME,

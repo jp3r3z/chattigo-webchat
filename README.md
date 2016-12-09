@@ -159,6 +159,9 @@ The default settings are defined as follows:
 ```js
 const SETTINGS = {
     header_text: "Web Chat",
+    header_background_color: null,
+    header_color: null,
+    header_icon_color: null,
     send_text: "Enviar",
     login_text: "Iniciar sesión",
     welcome_text: "Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión.",
@@ -189,7 +192,7 @@ const SETTINGS = {
 | `toggle_background_color` | CSS `background-color` for the webchat button in the collapsed state | string | `"#0853CB"` |
 | `toggle_color` | CSS `color` property for the webchat button in the collapsed state | string | `"#FFFFFF"` |
 | `welcome_text` | Welcome message displayed in the login form | string | `"Bienvenido al servicio de web chat de chattigo. Por favor introduzca la información solicitada para iniciar la sesión."` |
-| `width` | Number of pixels of the expanded widget's width | int | `300` |
+| `width` | Number of pixels of the expanded widget's with | int | `300` |
 | `height` | Number of pixels of the expanded widget's height | int | `400` |
 | `send_background_color` | Send message button css `background-color` property | string | `"#0853CB"` |
 | `send_color` | Send message css `color` property | string | `"#FFFFFF"` |
@@ -198,6 +201,9 @@ const SETTINGS = {
 | `toggle_button_image` | URL for an image to be displayed in the collapsed chattigo's widget; a valid glyphicon name as documentend in [bootstrap's glyphicon documentation](http://getbootstrap.com/components/#glyphicons); or null for chattigo's default image. | string or `null` | `null` |
 | `name_field` | Name of the field defined in `form_fields` which is going to be used as the user display name. Note that if you customize `form_fields`, you have to customize this setting too, and they need to be consistent. | string | `'Nombre'` |
 | `toggle_button` | (**EXPERIMENTAL**). Allows setting a completely custom collapsed chat button. User should write the custom html as a string. Styles for the custom button must be defined by the user, whether through inline styles, a `style` tag in your document, or a stylesheet imported through a `link` tag. The custom collapsed toggle button will be rendered as follows: `<div id="chattigo-webchat-container"><div id="chattigo-widget" class="collapsed custom"><!-- Your custom html here--></div></div>`. This option overrides `toggle_button_image`, `toggle_background_color` and `toggle_color`. | string | `null` |
+| `header_background_color` | Defines the background color css property for the webchat panel header. Must be specified as a string, in hexadecimal notation (i.e. "#f45842") | string | `null` |
+| `header_icon_color` | Defines the color css property for the webchat panel header's icon that collapses the widget. Must be specified as a string, in hexadecimal notation (i.e. "#f45842") | string | `null` |
+| `header_color` | Defines the color css property for the webchat panel header text. Must be specified as a string, in hexadecimal notation (i.e. "#f45842") | string | `null` |
 
 Expect more customization in future releases.
 
