@@ -16,29 +16,30 @@
           var chattigo = new Chattigo(
             "1359a42dc6370c4602c8e24c6b856603cfe9",
             // "a794d3faca63bc42a5ca9b9cf548380c463d",
-              login_fields: [
-              "Nombre",
               {
-                label: "Email",
-                required: true,
-                validation: function(value) {
-                  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                  if (!re.test(value)) {
-                    throw new Error("El valor de Email debe ser un correo electrónico válido");
-                  }
-                }
-              },
-              {label:"RUT", required: true},
-              {
-                label: "Carrera",
-                choices: [
-                  'Ing de computacion',
-                  'Arquitectura',
-                  'Urbanismo',
-                  'Biología'
-                ]
-              }
-              ]
+                  login_fields: [
+                      "Nombre",
+                      {
+                        label: "Email",
+                        required: true,
+                        validation: function(value) {
+                          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                          if (!re.test(value)) {
+                            throw new Error("El valor de Email debe ser un correo electrónico válido");
+                          }
+                        }
+                      },
+                      {label:"RUT", required: true},
+                      {
+                        label: "Carrera",
+                        choices: [
+                          'Ing de computacion',
+                          'Arquitectura',
+                          'Urbanismo',
+                          'Biología'
+                        ]
+                      }
+                  ]
             }
           );
           chattigo.init();

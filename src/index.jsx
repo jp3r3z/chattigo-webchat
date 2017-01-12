@@ -63,8 +63,13 @@ class Chattigo {
     }
 
     init() {
+        const hasName = (name_field, login_fields) => {
+            return login_fields.map((field) => {
+                return field === name_field || field.label === name_field;
+            }).reduce((l, r) => (l || r));
+        };
         if (this.settings.login_fields !== []) {
-            if ($.inArray(this.settings.name_field, this.settings.login_fields) == -1) {
+            if (! hasName(this.settings.name_field, this.settings.login_fields)) {
                 throw new ConfigurationException(Strings.EXCEPTION_NAME_FIELD_MISSING);
             }
         }
