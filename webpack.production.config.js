@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer');
 const assets = require('postcss-assets');
-const baseURL = 'http://driverwebchat1600.cloudapp.net/';
+const baseURL = 'https://api.chattigo.com/';
 
 module.exports = {
   devtool: 'source-map',
@@ -61,7 +61,7 @@ module.exports = {
       loaders: ["style", "css?sourceMap", "postcss", "resolve-url", "sass?sourceMap"]
     }]
   },
-  
+
   resolve: {
     extensions: ['', '.js', '.jsx']
   },

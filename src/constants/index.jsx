@@ -15,7 +15,7 @@ export const ActionTypes = keyMirror({
 });
 
 const ROOT = process.env.NODE_ENV === "production" ?
-                "http://driverwebchat1600.cloudapp.net" :
+                "https://api.chattigo.com" :
                 "http://localhost:3000";
 
 export const WebAPI = {
