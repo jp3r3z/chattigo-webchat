@@ -15,7 +15,7 @@ You can download Chattigo's webchat client from our CDN, like this:
 <html>
  <head>
    <meta charset="utf-8">
-   <script type="text/javascript" src="http://driverwebchat1600.cloudapp.net/chattigo-webchat.js"></script>
+   <script type="text/javascript" src="https://api.chattigo.com/chattigo-webchat.js"></script>
  </head>
 <body>
   <div id="app">
@@ -80,7 +80,7 @@ to conditionally include `bootstrap.js` only in case chattigo doesn't load.
 
 
 ```html
-<script type="text/javascript" src="http://driverwebchat1600.cloudapp.net/chattigo-webchat.js"></script>
+<script type="text/javascript" src="https://api.chattigo.com/chattigo-webchat.js"></script>
 <script type="text/javascript">
     if (typeof(Chattigo) === 'function') {
         console.log("Chattigo loaded... Nothing done");
@@ -108,7 +108,7 @@ load correctly. Also, make sure to replace the value of the variable
 <html>
  <head>
    <meta charset="utf-8">
-   <script type="text/javascript" src="http://driverwebchat1600.cloudapp.net/chattigo-webchat.js"></script>
+   <script type="text/javascript" src="https://api.chattigo.com/chattigo-webchat.js"></script>
  </head>
 <body>
   <div id="app">
