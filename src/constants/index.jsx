@@ -38,7 +38,7 @@ export const WebAPI = {
     Nominatim: {
         ReverseGeocoding: {
             method: "get",
-            URL: 'http://nominatim.openstreetmap.org/reverse'
+            URL: 'https://nominatim.openstreetmap.org/reverse'
         }
     }
 };
