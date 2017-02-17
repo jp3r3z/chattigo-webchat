@@ -4,6 +4,14 @@ export const toggle = () => ({
     type: ActionTypes.TOGGLE
 })
 
+export const collapse = () => ({
+    type: ActionTypes.COLLAPSE
+})
+
+export const expand = () => ({
+    type: ActionTypes.EXPAND
+})
+
 export const login = (fields, data) => ({
     type: ActionTypes.LOGIN,
     fields: fields,

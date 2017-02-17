@@ -204,6 +204,7 @@ const SETTINGS = {
 | `header_background_color` | Defines the background color css property for the webchat panel header. Must be specified as a string, in hexadecimal notation (i.e. "#f45842") | string | `null` |
 | `header_icon_color` | Defines the color css property for the webchat panel header's icon that collapses the widget. Must be specified as a string, in hexadecimal notation (i.e. "#f45842") | string | `null` |
 | `header_color` | Defines the color css property for the webchat panel header text. Must be specified as a string, in hexadecimal notation (i.e. "#f45842") | string | `null` |
+| `initial_open_state` | Defines the initial state of the widget, whether it is `expanded` or `collapsed` |  string | `collapsed` |
 
 Expect more customization in future releases.
 

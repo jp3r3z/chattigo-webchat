@@ -15,7 +15,7 @@ import ChattigoWebChat from './components';
 import { MessageProvider, ReverseGeocodingProvider } from './api';
 import API from './api';
 import { Strings, SETTINGS } from './constants';
-import { logout, toggle } from './actions';
+import { collapse, expand } from './actions';
 
 class SettingsProvider extends Component {
 
@@ -77,6 +77,13 @@ class Chattigo {
         chattigo.id = this.container;
         document.getElementsByTagName('body')[0].appendChild(chattigo);
         injectTapEventPlugin();
+        if (this.settings.initial_open_state) {
+            if (this.settings.initial_open_state.toUpperCase() === 'EXPANDED') {
+                this.store.dispatch(expand());
+            } else if (this.settings.initial_open_state.toUpperCase() === 'COLLAPSED') {
+                this.store.dispatch(collapse());
+            }
+        }
         render(
             (
                 <Provider store={this.store}>

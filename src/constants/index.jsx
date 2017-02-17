@@ -8,6 +8,8 @@ export const Visibility = keyMirror({
 
 export const ActionTypes = keyMirror({
     TOGGLE: null,
+    COLLAPSE: null,
+    EXPAND: null,
     LOGIN: null,
     LOGOUT: null,
     ADD_MESSAGE: null,

@@ -7,6 +7,10 @@ const visibility = (state = 'COLLAPSED', action) => {
                 return 'EXPANDED';
             else
                 return 'COLLAPSED';
+        case ActionTypes.COLLAPSE:
+            return 'COLLAPSED';
+        case ActionTypes.EXPAND:
+            return 'EXPANDED';
         default:
           return state;
     }
