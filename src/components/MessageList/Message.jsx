@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { kebabCase } from 'lodash/string';
 import Linkify from 'react-linkify';
 import moment from 'moment';
+import $ from 'jquery';
 
 export default class Message extends Component {
     componentDidMount(prevProps, prevState) {
