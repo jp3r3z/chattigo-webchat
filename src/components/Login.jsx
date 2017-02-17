@@ -60,40 +60,40 @@ const getClientInfo = (provider) => {
                 const lon = position.coords.longitude;
                 provider.get(lat, lon).then((response) => {
                     geolocation = response.body;
-                    resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                    resolve(Object.assign({}, client.getResult(), { geolocation: geolocation, location: window.location.href }))
                 }).catch((response) => {
                     geolocation = Strings.GEOLOCATION_REVERSE_GEOCODING_ERROR(response);
-                    resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                    resolve(Object.assign({}, client.getResult(), { geolocation: geolocation, location: window.location.href }))
                 });
             };
             const positionError = (error) => {
                 switch(error.code) {
                     case error.PERMISSION_DENIED:
                         geolocation = Strings.GEOLOCATION_PERMISSION_DENIED;
-                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation, location: window.location.href }))
                         break;
                     case error.POSITION_UNAVAILABLE:
                         geolocation = Strings.GEOLOCATION_POSITION_UNAVAILABLE;
-                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation, location: window.location.href }))
                         break;
                     case error.TIMEOUT:
                         geolocation = Strings.GEOLOCATION_TIMEOUT;
-                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation, location: window.location.href }))
                         break;
                     case error.UNKNOWN_ERROR:
                         geolocation = Strings.GEOLOCATION_UNKNOWN_ERROR(error.message);
-                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation, location: window.location.href }))
                         break;
                     default:
                         geolocation = Strings.GEOLOCATION_UNKNOWN_ERROR(error.message);
-                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+                        resolve(Object.assign({}, client.getResult(), { geolocation: geolocation, location: window.location.href }))
                         break;
                 }
             };
             navigator.geolocation.getCurrentPosition(getPosition, positionError);
         } else {
             geolocation = Strings.GEOLOCATION_NOT_AVAILABLE;
-            resolve(Object.assign({}, client.getResult(), { geolocation: geolocation }))
+            resolve(Object.assign({}, client.getResult(), { geolocation: geolocation, location: window.location.href }))
         }
     });
 };
