@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Component } from 'react';
 import { kebabCase } from 'lodash/string';
+import Linkify from 'react-linkify';
 import moment from 'moment';
 
 export default class Message extends Component {
@@ -28,7 +29,7 @@ export default class Message extends Component {
                                 }
                             })()
                         }
-                        {message.content}
+                        <Linkify>{message.content}</Linkify>
                     </div>
                 </div>
             </div>
