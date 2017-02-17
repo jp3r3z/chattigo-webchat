@@ -6,6 +6,9 @@ import Linkify from 'react-linkify';
 import moment from 'moment';
 
 export default class Message extends Component {
+    componentDidMount(prevProps, prevState) {
+        $(".chattigo-message span.Linkify a").attr( "target", "_blank" );
+    }
     render(){
         const message = this.props.message;
         const settings = this.context.settings;
