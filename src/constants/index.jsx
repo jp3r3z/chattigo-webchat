@@ -13,7 +13,8 @@ export const ActionTypes = keyMirror({
     LOGIN: null,
     LOGOUT: null,
     ADD_MESSAGE: null,
-    CLEAR_CHAT: null
+    CLEAR_CHAT: null,
+    FLUSH: null
 });
 
 const ROOT = process.env.NODE_ENV === "production" ?
@@ -98,5 +99,6 @@ export const SETTINGS = {
     height: 400,
     locale: "es",
     toggle_button_image: null,
-    name_field: "Nombre"
+    name_field: "Nombre",
+    preserve_history: true
 };

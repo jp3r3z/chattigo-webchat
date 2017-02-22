@@ -16,6 +16,8 @@ const session = ( state = { is_loggedin: false }, action) => {
             return Object.assign({}, state, session, { fields: action.fields }, action.data);
         case ActionTypes.LOGOUT:
             return Object.assign({}, state, { is_loggedin: false });
+        case ActionTypes.FLUSH:
+            return { is_loggedin: false }
         default:
           return state;
     }

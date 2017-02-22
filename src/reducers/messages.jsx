@@ -10,6 +10,7 @@ const messages = (state = [], action) => {
                 action.message,
             ];
         case ActionTypes.CLEAR_CHAT:
+        case ActionTypes.FLUSH:
             return [];
         default:
             return state;

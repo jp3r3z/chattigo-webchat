@@ -72,12 +72,18 @@ class DisconnectedMessageForm extends Component {
     sendHandler (e) {
         e.preventDefault();
         const message_textarea = $(findDOMNode(this.refs.message)).find('textarea').first()[0];
+        let name = null;
+        try {
+            name = this.props.session[lowerCase(this.context.settings.name_field)] || Strings.ANONYMOUS;
+        } catch (e) {
+            name = Strings.ANONYMOUS;
+        }
         if (message_textarea.value !== "" && message_textarea.value !== null && message_textarea.value !== undefined){
             let message = {
                 id: v4(),
                 author: {
                     id: this.props.session.user,
-                    name: this.props.session[lowerCase(this.context.settings.name_field)] || Strings.ANONYMOUS
+                    name: name
                 },
                 timestamp: moment().valueOf(),
                 origin: "customer",

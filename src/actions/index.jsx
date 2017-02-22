@@ -30,3 +30,7 @@ export const add_message = (message) => ({
 export const clear_chat = () => ({
     type: ActionTypes.CLEAR_CHAT
 })
+
+export const flush = () => ({
+    type: ActionTypes.FLUSH
+})

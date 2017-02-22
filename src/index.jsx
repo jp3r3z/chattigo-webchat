@@ -15,7 +15,7 @@ import ChattigoWebChat from './components';
 import { MessageProvider, ReverseGeocodingProvider } from './api';
 import API from './api';
 import { Strings, SETTINGS } from './constants';
-import { collapse, expand } from './actions';
+import { collapse, expand, flush } from './actions';
 
 class SettingsProvider extends Component {
 
@@ -64,14 +64,21 @@ class Chattigo {
 
     init() {
         const hasName = (name_field, login_fields) => {
-            return login_fields.map((field) => {
-                return field === name_field || field.label === name_field;
-            }).reduce((l, r) => (l || r));
+            console.log(login_fields);
+            if (login_fields.length !== 0) {
+                return login_fields.map((field) => {
+                    return field === name_field || field.label === name_field;
+                }).reduce((l, r) => (l || r), false);
+            } else {
+                return false;
+            }
         };
-        if (this.settings.login_fields !== []) {
+        if (this.settings.login_fields.length !== 0) {
             if (! hasName(this.settings.name_field, this.settings.login_fields)) {
                 throw new ConfigurationException(Strings.EXCEPTION_NAME_FIELD_MISSING);
             }
+        } else {
+            this.settings.name_field = null;
         }
         let chattigo = document.createElement("DIV");
         chattigo.id = this.container;
@@ -83,6 +90,9 @@ class Chattigo {
             } else if (this.settings.initial_open_state.toUpperCase() === 'COLLAPSED') {
                 this.store.dispatch(collapse());
             }
+        }
+        if (!this.settings.preserve_history) {
+            this.store.dispatch(flush());
         }
         render(
             (
