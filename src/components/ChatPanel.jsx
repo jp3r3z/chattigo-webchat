@@ -19,7 +19,7 @@ import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import DropfileField from 'react-dropfile-field';
-import { add_message, logout } from '../actions';
+import { add_message, logout, flush } from '../actions';
 import { Strings } from '../constants';
 import MessageList from './MessageList';
 
@@ -254,6 +254,9 @@ const mapLogoutDispatchToProps = (dispatch) => {
             settings.api.send(message).then((response) => {
                 settings.providers.messages.stop();
                 dispatch(logout());
+                if (!settings.preserve_history) {
+                    dispatch(flush());
+                }
             }).catch((response) => {
                 // console.error('Login:', response);
             });
