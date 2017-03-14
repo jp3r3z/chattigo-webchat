@@ -8,6 +8,13 @@ import { Strings } from '../../constants';
 
 class DynForm extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false,
+        };
+    }
+
     getValue() {
         let value = {};
         for (let field in this.refs) {
@@ -40,18 +47,21 @@ class DynForm extends Component {
 
     clickHandler (e) {
         e.preventDefault();
-        try {
-            this.validate();
-            this.props.onSubmit(e);
-        } catch (validationError) {
-            let message = Strings.FORM_ERRORS + ":";
-            console.log(validationError)
-            for (let error of validationError) {
-                message += "\n\n    *  " + error;
+        this.setState({ loading: true }, () => {
+            try {
+                this.validate();
+                this.props.onSubmit();
+            } catch (validationError) {
+                let message = Strings.FORM_ERRORS + ":";
+                console.log(validationError)
+                for (let error of validationError) {
+                    message += "\n\n    *  " + error;
+                }
+                message += "\n";
+                alert(message);
+                this.setState({ loading: false });
             }
-            message += "\n";
-            alert(message);
-        }
+        });
     }
 
     render() {
@@ -75,9 +85,10 @@ class DynForm extends Component {
                     </div>
                     <Button
                         type="submit"
-                        onClick={(e) => this.clickHandler(e)}
+                        disabled={this.state.loading}
+                        onClick={!this.state.loading ? (e) => this.clickHandler(e) : null}
                         >
-                        {this.props.submit_text}
+                        {this.state.loading ? Strings.LOADING : this.props.submit_text}
                     </Button>
                 </form>
             </Panel>
