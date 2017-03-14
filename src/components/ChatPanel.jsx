@@ -35,6 +35,9 @@ class DisconnectedMessageForm extends Component {
 
     componentDidMount() {
         this.setEnterKeyListener()
+        if (this.state.files.length > 0) {
+            $('.df-preview').parent().attr('class', 'chattigo-file-preview');
+        }
     }
 
     getChildContext() {
@@ -78,7 +81,10 @@ class DisconnectedMessageForm extends Component {
         } catch (e) {
             name = Strings.ANONYMOUS;
         }
-        if (message_textarea.value !== "" && message_textarea.value !== null && message_textarea.value !== undefined){
+        if ((message_textarea.value !== "" && message_textarea.value !== null && message_textarea.value !== undefined) || this.state.files.length > 0){
+            if (message_textarea.value === null || message_textarea.value === undefined) {
+                message_textarea.value = "";
+            }
             let message = {
                 id: v4(),
                 author: {
@@ -101,7 +107,6 @@ class DisconnectedMessageForm extends Component {
 
     onDrop(e, files) {
         this.setState({ files: files });
-        $('.df-preview').parent().attr('class', 'chattigo-file-preview');
     }
 
     onFileClear(e) {
