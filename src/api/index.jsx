@@ -132,6 +132,7 @@ export class MessageProvider {
             this.api = api;
         }
         this.timespan = timespan;
+        this.intervalId = null;
         this.running = false;
     }
 
@@ -141,7 +142,7 @@ export class MessageProvider {
     }
 
     _run(user, dispatch) {
-        setTimeout(() => {
+        this.intervalId = setInterval(() => {
             if (this.running) {
                 this.api.request(user).then((data) => {
                     if (data.body !== []) {
@@ -149,7 +150,6 @@ export class MessageProvider {
                             dispatch(add_message(message));
                         }
                     }
-                    this.run(user, dispatch);
                 }).catch((error) => {
                     console.error(this.tag, error);
                 });
@@ -161,6 +161,9 @@ export class MessageProvider {
 
     stop() {
         this.running = false;
+        if (this.intervalId !== null) {
+            clearInterval(this.intervalId);
+        }
     }
 }
 
