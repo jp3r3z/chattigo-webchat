@@ -19,8 +19,7 @@ import DynForm from './DynForm';
 
 
 class LoginForm extends Component {
-    grabData (e) {
-        e.preventDefault();
+    grabData () {
         let data = this.refs.form.getValue();
         if (this.props.session.user)
             data = Object.assign(data, { user: this.props.session.user });
@@ -33,7 +32,7 @@ class LoginForm extends Component {
         return (
             <DynForm
                 fields={this.context.settings.login_fields}
-                onSubmit={(e) => this.grabData(e)}
+                onSubmit={() => this.grabData()}
                 defaults={this.props.session}
                 ref='form'
                 submit_text={this.context.settings.login_text}

@@ -61,6 +61,7 @@ export const Strings = {
     HEADER_TEXT: "Web Chat",
     LOGIN: "Iniciar sesión",
     LOGOUT: "Terminar Chat",
+    LOADING: "Cargando...",
     ANONYMOUS: "Yo",
     GEOLOCATION_NOT_AVAILABLE: "El servicio de geolocalización no está disponible",
     GEOLOCATION_PERMISSION_DENIED: "El usuario no dio permiso de recibir la geolocalización",

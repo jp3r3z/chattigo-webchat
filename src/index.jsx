@@ -10,6 +10,7 @@ import { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { lowerCase } from 'lodash/string';
 import configureStore from './configureStore';
 import ChattigoWebChat from './components';
 import { MessageProvider, ReverseGeocodingProvider } from './api';
@@ -58,13 +59,20 @@ class Chattigo {
             }
         };
         this.settings = Object.assign({}, key, api, providers, SETTINGS, settings);
+        let login_labels = this.settings.login_fields.map((field) => {
+            if (typeof field === "string") {
+                return lowerCase(field);
+            } else if (typeof field === "object") {
+                return lowerCase(field.label);
+            }
+        });
+        this.settings = Object.assign({}, this.settings, {login_labels: login_labels});
         this.store = configureStore();
         this.container = "chattigo-webchat-container";
     }
 
     init() {
         const hasName = (name_field, login_fields) => {
-            console.log(login_fields);
             if (login_fields.length !== 0) {
                 return login_fields.map((field) => {
                     return field === name_field || field.label === name_field;
@@ -93,6 +101,15 @@ class Chattigo {
         }
         if (!this.settings.preserve_history) {
             this.store.dispatch(flush());
+        }
+        const state = this.store.getState();
+        if (state.session.is_loggedin) {
+            let user = {};
+            for (let label of this.settings.login_labels) {
+                user[label] = state.session[label];
+            }
+            user = Object.assign({}, user, { user: state.session.user});
+            this.settings.providers.messages.run(user, this.store.dispatch);
         }
         render(
             (
