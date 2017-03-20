@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { Component } from 'react';
 import { kebabCase } from 'lodash/string';

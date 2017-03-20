@@ -99,7 +99,9 @@ class DisconnectedMessageForm extends Component {
             if (this.state.files.length > 0) {
                 message = Object.assign({}, message, { files: this.state.files });
             }
-            $(findDOMNode(this.refs.message)).find('textarea').each((index, element) => { if (index == 1 ) { element.value = '';}});
+            $(findDOMNode(this.refs.message)).find('textarea').each((index, element) => {
+                element.value = '';
+            });
             this.refs.dropfilefield.clearFiles();
             this.props.onAddMessage(message, this.context.settings);
         }
@@ -155,6 +157,7 @@ class DisconnectedMessageForm extends Component {
             );
         const attach = (
             <IconButton
+                style={{padding: 0}}
                 className="chattigo-icon-button"
                 tooltip={Strings.ATTACH_FILE}
                 onClick={(e) => this.toggleFileInput(e)} >
@@ -165,8 +168,9 @@ class DisconnectedMessageForm extends Component {
             <Form inline>
                 <div id={"chattigo-message-form"}>
                     {dropzone}
-                    {/*attach*/}
+                    {attach}
                     <IconButton
+                        style={{padding: 0}}
                         className="chattigo-icon-button"
                         tooltip={Strings.SEND}
                         onClick={(e) => this.sendHandler(e)} >
@@ -191,11 +195,12 @@ const mapDispatchToProps = (dispatch) => {
         onAddMessage: (message, settings) => {
             settings.api.send(message).then((response) => {
                 if (process.env.NODE_ENV !== "production") {
-                    console.log("ChatPanel: mapDispatchToProps: response:", response);
+                    if (response.message.attachments)
+                        console.log("ChatPanel: mapDispatchToProps: response.message.attachments[0]:", response.message.attachments[0]);
                 }
                 dispatch(add_message(response.message));
             }).catch((response) => {
-                // console.error('Send message:', response);
+                console.error('Send message:', response);
             });
         }
     };

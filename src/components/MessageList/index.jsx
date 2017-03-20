@@ -15,8 +15,10 @@ class DisconnectedMessageList extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        const message_list = $(this.selector)[0];
+        const height = message_list.scrollHeight;
         $(this.selector).stop().animate({
-            scrollTop: $(this.selector)[0].scrollHeight
+            scrollTop: height
         }, 500);
     }
 
