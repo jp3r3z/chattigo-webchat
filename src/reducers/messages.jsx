@@ -7,7 +7,7 @@ const messages = (state = [], action) => {
         case ActionTypes.ADD_MESSAGE:
             return [
                 ...state,
-                action.message,
+                action.message
             ];
         case ActionTypes.CLEAR_CHAT:
         case ActionTypes.FLUSH:
