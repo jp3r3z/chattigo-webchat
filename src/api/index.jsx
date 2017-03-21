@@ -53,8 +53,8 @@ class API {
                     .set('Authorization', `Token token=${this.api_key}`)
                     .set('Accept', 'application/json')
                     .on('progress', (e) => {
-                        console.log('upload event: ', e);
-                        console.log('uploading file: ', file.name,'... ', e.percent, '%');
+                        // console.log('upload event: ', e);
+                        // console.log('uploading file: ', file.name,'... ', e.percent, '%');
                     });
                 const formData = new FormData();
                 formData.append(`token`, this.api_key);
