@@ -126,6 +126,8 @@ class DisconnectedMessageForm extends Component {
             'doc':     'icon-file-word',
             'xls':     'icon-file-excel',
             'xlsx':    'icon-file-excel',
+            'ppt':     'icon-file-play',
+            'pptx':    'icon-file-play',
             'pdf':     'icon-file-pdf',
             'default': 'icon-file-text'
         }

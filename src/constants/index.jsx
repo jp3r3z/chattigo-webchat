@@ -76,6 +76,8 @@ export const Strings = {
     FORM_ERRORS: "Se han encontrado errores en el formulario",
     AUTH_EXCEPTION_CLIENT_MSG: "Tu API Key es inválido. Por favor contacta con los ejecutivos de Chattigo para obtener un API Key válido.",
     AUTH_EXCEPTION_USER_MSG: "Ha ocurrido un error con el sistema de chat. De ser posible, por favor notifica al administrador de esta página.",
+    MEDIA_TYPE_EXCEPTION_CLIENT_MSG: "Se intentó subir un archivo de un tipo no soportado.",
+    MEDIA_TYPE_EXCEPTION_USER_MSG: "El archivo que estás tratando de cargar no es soportado por nuestro sistema. Los tipos de archivo permitidos son: imágenes, audios, documentos de ms-word, ms-excel y ms-powerpoint.",
     CLIENT_LOGGED_OUT: "CLIENTE DESCONECTADO"
 };
 

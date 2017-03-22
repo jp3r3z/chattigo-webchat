@@ -20,8 +20,20 @@ export default class Message extends Component {
         $(".chattigo-message span.Linkify a").attr( "target", "_blank" );
     }
 
-    openLightbox(content_type) {
-        if (content_type !== "application/pdf")
+    is_image(attachment) {
+        const with_thumbnail = [
+            'image/png',
+            'image/jpeg',
+            'image/jpg',
+            'image/gif'
+        ]
+        return with_thumbnail.reduce((acc, val) => {
+            return acc || val === attachment.content_type;
+        }, false);
+    };
+
+    openLightbox(attachment) {
+        if (this.is_image(attachment))
             this.setState({ lightboxIsOpen: true });
     }
 
@@ -32,6 +44,87 @@ export default class Message extends Component {
     render(){
         const message = this.props.message;
         const settings = this.context.settings;
+        let attachments = null;
+        if (message.attachments) {
+            const should_have_preview = (attachment) => {
+                const with_thumbnail = [
+                    'application/pdf',
+                    'image/png',
+                    'image/jpeg',
+                    'image/jpg',
+                    'image/gif'
+                ]
+                return with_thumbnail.reduce((acc, val) => {
+                    return acc || val === attachment.content_type;
+                }, false);
+            };
+            const theres_at_least_one_image = message.attachments.map(this.is_image).reduce((acc, val) => {
+                return acc || val;
+            }, false);
+            const produce_preview = (attachment) => {
+                let source = null;
+                if (should_have_preview(attachment)) {
+                    if (this.is_image(attachment)) {
+                        return (
+                        <img
+                            key={attachment.name}
+                            src={attachment.url.thumbnail}
+                            alt={attachment.name}
+                            onClick={() => {this.openLightbox(attachment)}}
+                        />
+                        );
+                    } else {
+                        if (attachment.content_type === 'application/pdf') {
+                            source = attachment.url.thumbnail;
+                        }
+                    }
+                } else {
+                    source = require("../../assets/images/file.png");
+                }
+                return <a
+                    key={attachment.name}
+                    title={attachment.name}
+                    href={attachment.url.original}
+                    target="_blank"
+                    >
+                    <img
+                        src={source}
+                        alt={attachment.name}
+                        />
+                </a>;
+            };
+            let Widget = null;
+            let AnchorTag = null;
+            if (theres_at_least_one_image) {
+                let images = message.attachments.map((attachment) => {
+                    if (should_have_preview(attachment)) {
+                        return {
+                            src: attachment.url.original,
+                            thumbnail: attachment.url.thumbnail,
+                            caption: attachment.name
+                        };
+                    } else {
+                        return null;
+                    }
+                });
+                Widget = (
+                    <Lightbox
+                        images={images}
+                        isOpen={this.state.lightboxIsOpen}
+                        onClose={() => {this.closeLightbox()}}
+                    />
+                );
+
+            }
+            attachments = (
+                <div className={"chattigo-message-attachments"}>
+                    {Widget}
+                    {message.attachments.map((attachment) => {
+                        return produce_preview(attachment);
+                    })}
+                </div>
+            );
+        }
         return (
             <div className="chattigo-message-container">
                 <div className={classNames("chattigo-message", "chattigo-message-from-"+kebabCase(message.origin))}>
@@ -42,50 +135,7 @@ export default class Message extends Component {
                         </div>
                     </div>
                     <div className={classNames("chattigo-message-content", "chattigo-message-"+kebabCase(message.type)+"-content")}>
-                        {(() => {
-                                if (message.attachments) {
-                                    return <div className={"chattigo-message-attachments"}>
-                                                <Lightbox
-                                                    images={message.attachments.map((attachment) => {
-                                                        if (attachment.content_type === "application/pdf") {
-                                                            return null;
-                                                        }
-                                                        return {
-                                                            src: attachment.url.original,
-                                                            thumbnail: attachment.url.thumbnail,
-                                                            caption: attachment.name
-                                                        };
-                                                    })}
-                                                    isOpen={this.state.lightboxIsOpen}
-                                                    onClose={() => {this.closeLightbox()}}
-                                                />
-                                                {message.attachments.map((attachment) => {
-                                                    if (attachment.content_type === "application/pdf") {
-                                                        return <a
-                                                                    key={attachment.name}
-                                                                    title={attachment.name}
-                                                                    href={attachment.url.original}
-                                                                    target="_blank"
-                                                                >
-                                                                    <img
-                                                                        src={attachment.url.thumbnail}
-                                                                        alt={attachment.name}
-                                                                        onClick={() => {this.openLightbox(attachment.content_type)}}
-                                                                        />
-                                                                </a>;
-                                                    } else {
-                                                        return <img
-                                                            key={attachment.name}
-                                                            src={attachment.url.thumbnail}
-                                                            alt={attachment.name}
-                                                            onClick={() => {this.openLightbox(attachment.content_type)}}
-                                                            />;
-                                                    }
-                                                })}
-                                           </div>;
-                                }
-                            })()
-                        }
+                        {attachments}
                         <Linkify>{message.content}</Linkify>
                     </div>
                 </div>

@@ -64,9 +64,16 @@ class API {
                 req.send(formData)
                     .end((error, response) => {
                         if (error) {
-                            if (error.status == 401) {
-                                console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
-                                alert(Strings.AUTH_EXCEPTION_USER_MSG);
+                            switch (error.status) {
+                                case 401:
+                                    console.error(Strings.AUTH_EXCEPTION_CLIENT_MSG);
+                                    alert(Strings.AUTH_EXCEPTION_USER_MSG);
+                                    break;
+                                case 415:
+                                    console.error(Strings.MEDIA_TYPE_EXCEPTION_CLIENT_MSG);
+                                    alert(Strings.MEDIA_TYPE_EXCEPTION_USER_MSG);
+                                    break;
+                                default:
                             }
                             console.error(`API.send: status: ${response.status} ${response.statusText}. ${response.text}`, response);
                             reject(response);
