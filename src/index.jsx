@@ -11,12 +11,13 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { lowerCase } from 'lodash/string';
+import moment from 'moment';
 import configureStore from './configureStore';
 import ChattigoWebChat from './components';
 import { MessageProvider, ReverseGeocodingProvider } from './api';
 import API from './api';
 import { Strings, SETTINGS } from './constants';
-import { collapse, expand, flush } from './actions';
+import { toggle, collapse, expand, logout, clear_chat, flush } from './actions';
 
 class SettingsProvider extends Component {
 
@@ -50,6 +51,12 @@ class ConfigurationException {
 class Chattigo {
 
     constructor (APIkey, settings = SETTINGS) {
+        this.container = "chattigo-webchat-container";
+        this._setup(APIkey, settings);
+        injectTapEventPlugin();
+    }
+
+    _setup(APIkey, settings) {
         const key = { APIkey: APIkey };
         const api = { api: new API(APIkey) };
         const providers = {
@@ -68,7 +75,67 @@ class Chattigo {
         });
         this.settings = Object.assign({}, this.settings, {login_labels: login_labels});
         this.store = configureStore();
-        this.container = "chattigo-webchat-container";
+    }
+
+    update(settings) {
+        this.settings = Object.assign({}, this.settings, settings);
+        const selector = "#"+this.container;
+        $(selector).remove();
+        this.init();
+    }
+
+    overwrite(settings) {
+        this._setup(this.settings.APIkey, settings);
+        const selector = "#"+this.container;
+        $(selector).remove();
+        this.init();
+    }
+
+    toggle() {
+        this.store.dispatch(toggle());
+    }
+
+    collapse() {
+        this.store.dispatch(collapse());
+    }
+
+    expand() {
+        this.store.dispatch(expand());
+    }
+
+    logout() {
+        const state = this.store.getState();
+        if (state.session.is_loggedin) {
+            const message = {
+                id: v4(),
+                author: {
+                    id: state.session.user,
+                    name: state.session[lowerCase(this.settings.name_field)]
+                },
+                logout: true,
+                timestamp: moment().valueOf(),
+                origin: "customer",
+                type: "text",
+                content: Strings.CLIENT_LOGGED_OUT
+            };
+            this.settings.api.send(message).then((response) => {
+                this.settings.providers.messages.stop();
+                this.store.dispatch(logout());
+                if (!this.settings.preserve_history) {
+                    this.store.dispatch(flush());
+                }
+            }).catch((response) => {
+                console.error('Logout:', response);
+            });
+        }
+    }
+
+    clear_chat() {
+        this.store.dispatch(clear_chat());
+    }
+
+    flush() {
+        this.store.dispatch(flush());
     }
 
     init() {
@@ -91,7 +158,6 @@ class Chattigo {
         let chattigo = document.createElement("DIV");
         chattigo.id = this.container;
         document.getElementsByTagName('body')[0].appendChild(chattigo);
-        injectTapEventPlugin();
         if (this.settings.initial_open_state) {
             if (this.settings.initial_open_state.toUpperCase() === 'EXPANDED') {
                 this.store.dispatch(expand());

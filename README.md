@@ -1,4 +1,4 @@
-![Logo Chattigo](https://raw.githubusercontent.com/throoze/chattigo-webchat/develop/src/assets/images/CHATTIGO.png)
+[![Logo Chattigo](https://raw.githubusercontent.com/throoze/chattigo-webchat/develop/src/assets/images/CHATTIGO.png)](http://www.chattigo.com/)
 [![npm version](https://badge.fury.io/js/chattigo-webchat.svg)](https://badge.fury.io/js/chattigo-webchat)
 [![Dependency Status](https://david-dm.org/throoze/chattigo-webchat.svg)](https://david-dm.org/throoze/chattigo-webchat)
 [![devDependency Status](https://david-dm.org/throoze/chattigo-webchat/dev-status.svg)](https://david-dm.org/throoze/chattigo-webchat#info=devDependencies)
@@ -230,6 +230,7 @@ You can specify a `string` field in the `login_fields` option in several ways:
 
   * By specifying a `choices` key:
 
+```js
         login_fields: [{label: 'Nombre', type: 'string'}, 'Email', { label: 'RUT' }, {
           label: 'Carrera',
           choices: [
@@ -239,7 +240,7 @@ You can specify a `string` field in the `login_fields` option in several ways:
               /* ... */
             ]
           }]
-
+```
 
 #### Validation
 
@@ -281,10 +282,66 @@ document.addEventListener("DOMContentLoaded", function() {
 In this example, both `Email` and `RUT` fields are required, and email
 validation through regex test is provided for `Email` field.
 
+### Methods
+
+The chattigo instance returned by its constructor exposes the following methods:
+
+#### .init()
+
+Initializes the widget given it has been properly configured with a valid API
+key, and either the default settings, or a valid settings object.
+
+#### .update(settings)
+
+Update chattigo widget's settings by merging the settings object passed with the
+current settings.
+
+##### Parameters:
+
+* `settings`:
+    * **Type**: object.
+    * **Description**: Settings object as described in section _settings_.
+
+#### .overwrite(settings)
+
+Overwrite chattigo widget's settings by replacing current settings with the ones
+passed in the settings object.
+
+##### Parameters:
+
+* `settings`:
+    * **Type**: object.
+    * **Description**: Settings object as described in section _settings_.
+
+#### .toggle()
+
+Toggle the widget into collapsed/expanded state.
+
+#### .collapse()
+
+Collapses the widget.
+
+#### .expand()
+
+Expands the widget.
+
+#### .logout()
+
+Ends current session and sends a message to chattigo indicating the user has
+been disconnected.
+
+#### .clear_chat()
+
+Clears the chat's message list from local storage.
+
+#### .flush()
+
+Clears all data in local storage.
+
 ## API Key
 
 In order to get an API key you need to get in touch with chattigo executives.
-Visit [our website](http://www.chattigo.im) or contact our executives through
+Visit [our website](http://www.chattigo.com/) or contact our executives through
 contacto@chattigo.com.
 
 
